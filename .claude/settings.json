@@ -1,6 +1,6 @@
 {
   "$comment": [
-    "Project settings for the Priority Introductions monitoring workshop.",
+    "Project settings for the Priority Recommendations monitoring workshop.",
     "The hook is the point of this file: after any Write or Edit, the quality gate",
     "runs and reports. It takes about a second. Team standards only hold when they",
     "execute without being remembered.",

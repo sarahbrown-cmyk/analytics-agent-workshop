@@ -9,7 +9,7 @@ measurement. Instrumentation is healthy.
 Two facts make attribution impossible:
 
 1. The decline appears in the **control arm** at essentially the same magnitude.
-   Control users never saw Priority Introductions.
+   Control users never saw Priority Recommendations.
 2. `EXP-4502`, a single-page checkout redesign, is running on **60% of exactly this
    cell** for exactly this period, with `subscription_conversion_rate` as its own
    primary metric.
@@ -18,7 +18,7 @@ Two facts make attribution impossible:
 
 - Locate Android/GB and record `arm_symmetry: symmetric_across_arms`.
 - State plainly that the decline is real and that it **cannot** be attributed to
-  Priority Introductions.
+  Priority Recommendations.
 - Name `EXP-4502`, with its traffic share.
 - Keep at least two explanations live, each with a test that would separate them.
 - Rule the feature explanation out, or reduce it to low confidence, citing the

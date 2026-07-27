@@ -201,7 +201,7 @@ def check_ownership_metadata() -> dict:
             if not document.get(field):
                 problems.append(f"{relative}: missing {field}")
 
-    brief = _yaml.load_path(REPO_ROOT / "feature_briefs" / "priority-introductions.yaml")
+    brief = _yaml.load_path(REPO_ROOT / "feature_briefs" / "priority-recommendations.yaml")
     for field in ("owner", "analytics_owner", "version"):
         if not brief.get("feature", {}).get(field):
             problems.append(f"feature brief: missing feature.{field}")
@@ -270,7 +270,7 @@ def check_cost(config: dict) -> dict:
 
 
 def check_escalation_coverage() -> dict:
-    brief = _yaml.load_path(REPO_ROOT / "feature_briefs" / "priority-introductions.yaml")
+    brief = _yaml.load_path(REPO_ROOT / "feature_briefs" / "priority-recommendations.yaml")
     rules = _yaml.load_path(REPO_ROOT / "src" / "schemas" / "escalation_rules.yaml")
     declared = [str(t) for t in brief.get("escalation_triggers", [])]
     enabled = {r["id"] for r in rules.get("rules", []) if r.get("enabled", True)}

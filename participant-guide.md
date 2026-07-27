@@ -3,7 +3,7 @@
 ## What we are doing
 
 Building a post-launch monitoring agent for a fictional feature, **Priority
-Introductions**, and then making it trustworthy enough that a team could depend on it.
+Recommendations**, and then making it trustworthy enough that a team could depend on it.
 
 The distinction the whole session turns on:
 
@@ -37,7 +37,7 @@ is the rubric an advanced-track participant's new specialist has to satisfy.
 
 ```bash
 git clone <repository-url>
-cd match-analytics-agent-workshop
+cd analytics-agent-workshop
 python3 evaluations/run_evaluations.py
 ```
 
@@ -70,7 +70,7 @@ summarise it in three lines.
 
 ## The scenario
 
-Priority Introductions launched on 2026-05-04 to iOS and Android in four markets, split
+Priority Recommendations launched on 2026-05-04 to iOS and Android in four markets, split
 50/50 treatment and control. We are running the day-30 checkpoint.
 
 What the aggregates say: adoption is healthy at about 35%, the primary outcome is up

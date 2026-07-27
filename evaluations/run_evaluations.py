@@ -39,7 +39,7 @@ from tools import _yaml  # noqa: E402
 
 CASES_DIR = REPO_ROOT / "evaluations" / "cases"
 RUBRIC_PATH = REPO_ROOT / "evaluations" / "rubrics" / "monitoring_report_rubric.yaml"
-BRIEF_PATH = REPO_ROOT / "feature_briefs" / "priority-introductions.yaml"
+BRIEF_PATH = REPO_ROOT / "feature_briefs" / "priority-recommendations.yaml"
 SOLUTION_REPORTS = REPO_ROOT / "solutions" / "completed" / "reports"
 
 GREEN, RED, YELLOW, DIM, BOLD, RESET = (

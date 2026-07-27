@@ -1,6 +1,6 @@
 # Case 3 — Instrumentation failure
 #
-# The priority_intro_sent event stops firing reliably on Android/US after an
+# The priority_rec_saved event stops firing reliably on Android/US after an
 # analytics SDK release. Recorded adoption halves. Users did not change: the
 # funnel step after the broken event holds steady, and observed volume ordering
 # becomes impossible.
@@ -29,6 +29,6 @@ expect:
   must_name_context: ["rel-1058"]
   max_overall_confidence: medium
   forbidden_phrases:
-    - "users sent fewer"
+    - "users saved fewer"
     - "adoption fell because"
     - "engagement declined"

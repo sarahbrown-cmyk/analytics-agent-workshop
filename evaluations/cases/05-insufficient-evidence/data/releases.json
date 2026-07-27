@@ -12,7 +12,7 @@
         "CA"
       ],
       "type": "app_release",
-      "summary": "Priority Introductions launch build.",
+      "summary": "Priority Recommendations launch build.",
       "touches_payments": false
     },
     {
@@ -27,7 +27,7 @@
         "CA"
       ],
       "type": "app_release",
-      "summary": "Priority Introductions launch build.",
+      "summary": "Priority Recommendations launch build.",
       "touches_payments": false
     },
     {
@@ -42,7 +42,7 @@
         "CA"
       ],
       "type": "server_config",
-      "summary": "Introduction ranking weight tuned for recency. No client change.",
+      "summary": "Recommendation ranking weight tuned for recency. No client change.",
       "touches_payments": false
     }
   ]

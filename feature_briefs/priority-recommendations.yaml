@@ -1,5 +1,5 @@
 # ============================================================================
-# Launch contract: Priority Introductions
+# Launch contract: Priority Recommendations
 #
 # FICTIONAL. This feature does not exist. The markets, metrics, thresholds and
 # instrumentation requirements below are invented for the workshop and are not
@@ -12,8 +12,8 @@
 # ============================================================================
 
 feature:
-  id: priority-introductions
-  name: Priority Introductions
+  id: priority-recommendations
+  name: Priority Recommendations
   owner: product-discovery
   analytics_owner: lifecycle-analytics
   version: 1.2.0
@@ -34,7 +34,7 @@ launch:
 # What the feature is supposed to do. One primary metric — a launch with three
 # primary metrics has none.
 primary_outcome:
-  metric: mutual_connection_rate
+  metric: recommendation_engagement_rate
   direction: increase
   expected_relative_change_pct: [2.0, 4.0]
   minimum_detectable_effect_pct: 1.2
@@ -43,7 +43,7 @@ secondary_metrics:
   - metric: feature_adoption_rate
     direction: increase
     expected_range_pct: [25.0, 45.0]
-    note: "Share of eligible treatment users who send at least one priority introduction."
+    note: "Share of eligible treatment users who save at least one priority recommendation."
   - metric: subscription_conversion_rate
     direction: increase
     expected_relative_change_pct: [0.0, 2.5]
@@ -81,11 +81,11 @@ required_segments:
   - subscription_status
 
 required_funnel:
-  name: priority_introductions_monetization
+  name: priority_recommendations_monetization
   steps:
     - feature_impression
-    - intro_viewed
-    - intro_sent
+    - recommendation_viewed
+    - recommendation_saved
     - paywall_viewed
     - checkout_started
     - payment_completed
@@ -97,10 +97,10 @@ required_funnel:
 instrumentation_requirements:
   completeness_floor_pct: 95.0
   critical_events:
-    - event: priority_intro_impression
-      required_properties: [user_id, intro_id, surface, app_version]
-    - event: priority_intro_sent
-      required_properties: [user_id, intro_id, recipient_bucket, app_version]
+    - event: priority_rec_impression
+      required_properties: [user_id, recommendation_id, surface, app_version]
+    - event: priority_rec_saved
+      required_properties: [user_id, recommendation_id, slot_position, app_version]
     - event: paywall_viewed
       required_properties: [user_id, paywall_id, app_version]
     - event: checkout_started

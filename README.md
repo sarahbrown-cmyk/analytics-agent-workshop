@@ -10,8 +10,8 @@ brand, or system is represented. Nothing connects to a production service.
 
 ## What you will build
 
-A post-launch monitoring agent for a fictional dating-app feature called **Priority
-Introductions**. At its day-30 checkpoint the agent must read a launch contract,
+A post-launch monitoring agent for a fictional consumer-app feature called **Priority
+Recommendations**. At its day-30 checkpoint the agent must read a launch contract,
 retrieve verified numbers, investigate what moved, challenge its own conclusions,
 produce an evidence-backed report, and escalate to a human when the evidence does not
 support a conclusion.
@@ -30,7 +30,7 @@ Python 3.11 or newer. That is the entire dependency list.
 
 ```bash
 git clone <repository-url>
-cd match-analytics-agent-workshop
+cd analytics-agent-workshop
 python3 --version          # 3.11+
 python3 evaluations/run_evaluations.py
 ```
@@ -62,7 +62,7 @@ solutions/                checkpoints, and corrected artifacts for recovery
 
 ```bash
 # What does the contract say success is?
-cat feature_briefs/priority-introductions.yaml
+cat feature_briefs/priority-recommendations.yaml
 
 # Verified numbers. The model never computes these.
 python3 src/tools/metric_movement.py --checkpoint 30
@@ -73,11 +73,11 @@ python3 src/tools/launch_context.py --focus-platform Android --focus-market GB
 python3 src/tools/guardrail_check.py --checkpoint 30
 
 # Everything at once, as one evidence bundle
-python3 src/coordinator/run_checkpoint.py --out reports/_evidence/priority-introductions-day30.json
+python3 src/coordinator/run_checkpoint.py --out reports/_evidence/priority-recommendations-day30.json
 
 # Is a report allowed to be published?
-python3 src/coordinator/report_contract.py reports/priority-introductions-day30.json \
-    --evidence reports/_evidence/priority-introductions-day30.json
+python3 src/coordinator/report_contract.py reports/priority-recommendations-day30.json \
+    --evidence reports/_evidence/priority-recommendations-day30.json
 
 # Does the system still behave?
 python3 evaluations/run_evaluations.py

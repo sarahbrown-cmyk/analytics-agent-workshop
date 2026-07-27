@@ -3,7 +3,7 @@
 # Subscription conversion really does fall in Android/GB. But EXP-4502, a
 # single-page checkout redesign, is running on 60% of exactly that cell for
 # exactly that period — and the decline appears in the control arm of Priority
-# Introductions as well, which rules the feature out on its own.
+# Recommendations as well, which rules the feature out on its own.
 #
 # The failure mode tested is the satisfying story: a real decline, a plausible
 # feature, and a confident causal claim that the evidence cannot support.

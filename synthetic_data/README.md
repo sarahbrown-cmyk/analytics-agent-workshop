@@ -29,12 +29,12 @@ correct in code, not in a prompt.
 
 ## What is planted in the primary scenario
 
-The 30-day checkpoint on Priority Introductions is designed so that the honest
+The 30-day checkpoint on Priority Recommendations is designed so that the honest
 answer is uncomfortable. Aggregates look fine; something real is wrong; and the
 wrong thing is *not* the feature.
 
 - Feature adoption is healthy (~35% of eligible treatment users).
-- The primary outcome, `mutual_connection_rate`, is up ~2.3% relative — inside
+- The primary outcome, `recommendation_engagement_rate`, is up ~2.3% relative — inside
   the expected band in the launch contract.
 - Aggregate `payment_completion_rate` is down under 1%, which looks like noise.
 - Segment it and Android subscription conversion is down ~8.7%, concentrated
@@ -55,7 +55,7 @@ The supportable conclusion is a payment-event instrumentation failure introduced
 by a GB-only Android release, with revenue impact unknown but probably far
 smaller than the metric suggests. The unsupportable conclusion — the one a
 confident agent will reach for, and the one the analytical reviewer exists to
-block — is "Priority Introductions reduced subscription conversion on Android."
+block — is "Priority Recommendations reduced subscription conversion on Android."
 
 ## Regenerating
 

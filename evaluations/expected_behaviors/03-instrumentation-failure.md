@@ -2,7 +2,7 @@
 
 ## What is in the data
 
-`priority_intro_sent` stops firing reliably on Android/US from 2026-05-20, after
+`priority_rec_saved` stops firing reliably on Android/US from 2026-05-20, after
 release `rel-1058` shipped an analytics SDK upgrade and event batching change to
 exactly that segment. Completeness averages ~73% against a 95% floor, the event's
 schema version bumps 4 → 5, and the null rate on a required property jumps.
@@ -19,8 +19,8 @@ own scenario, so nobody passes by remembering "Android GB payments".
 
 - Report instrumentation as `below_floor` and name `feature_adoption_rate` as not
   trustworthy in that cell.
-- Describe the movement as **recorded** adoption falling, never as users sending
-  fewer introductions.
+- Describe the movement as **recorded** adoption falling, never as users saving
+  fewer recommendations.
 - Cite the impossible-ordering finding. It is the strongest evidence available.
 - Name `rel-1058` as the temporally and dimensionally matching release, without
   asserting it as proven cause.

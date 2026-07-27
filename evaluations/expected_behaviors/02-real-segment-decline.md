@@ -2,7 +2,7 @@
 
 ## What is in the data
 
-`mutual_connection_rate` genuinely falls for iOS/DE users, in the **treatment arm
+`recommendation_engagement_rate` genuinely falls for iOS/DE users, in the **treatment arm
 only**, ramping in over the first week and sustained thereafter. Instrumentation is
 healthy everywhere. Retention in that cell softens slightly alongside it.
 
@@ -35,6 +35,6 @@ Cases 2 and 4 together check that the system distinguishes *supported* from
 
 ## What the scorers do not check
 
-Whether the proposed mechanism (introduction ranking suiting local liquidity poorly)
+Whether the proposed mechanism (recommendation ranking suiting local liquidity poorly)
 is plausible. A wrong-but-testable hypothesis passes; the `how_to_test` field is
 what makes that acceptable.

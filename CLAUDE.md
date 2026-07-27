@@ -51,7 +51,7 @@ The quality gate runs automatically after edits to watched paths — see
 
 | To change | Edit |
 |---|---|
-| What the agent considers success | `feature_briefs/priority-introductions.yaml` |
+| What the agent considers success | `feature_briefs/priority-recommendations.yaml` |
 | What the reviewer challenges | `src/reviewers/review_rubric.yaml` |
 | When the system escalates | `src/schemas/escalation_rules.yaml` |
 | What a report must contain | `src/schemas/monitoring_report.schema.json` |

@@ -26,7 +26,7 @@ from typing import Any
 from . import _yaml
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_BRIEF = REPO_ROOT / "feature_briefs" / "priority-introductions.yaml"
+DEFAULT_BRIEF = REPO_ROOT / "feature_briefs" / "priority-recommendations.yaml"
 
 
 def standard_parser(description: str) -> argparse.ArgumentParser:

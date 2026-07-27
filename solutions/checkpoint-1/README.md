@@ -6,9 +6,9 @@ The agent reads the launch contract, calls the deterministic tools, and produces
 monitoring report that passes `report_contract.py`.
 
 ```bash
-python3 src/coordinator/run_checkpoint.py --out reports/_evidence/priority-introductions-day30.json
-python3 src/coordinator/report_contract.py reports/priority-introductions-day30.json \
-    --evidence reports/_evidence/priority-introductions-day30.json
+python3 src/coordinator/run_checkpoint.py --out reports/_evidence/priority-recommendations-day30.json
+python3 src/coordinator/report_contract.py reports/priority-recommendations-day30.json \
+    --evidence reports/_evidence/priority-recommendations-day30.json
 ```
 
 ## What the investigation should have found
@@ -46,6 +46,6 @@ In this order, because the order is the lesson:
 
 ## The wrong report
 
-"Priority Introductions reduced subscription conversion on Android in GB by 33%." Fluent,
+"Priority Recommendations reduced subscription conversion on Android in GB by 33%." Fluent,
 specific, cites real numbers, and would have got a working feature rolled back while the
 actual bug — a payment event silently under-reporting revenue data — carried on.

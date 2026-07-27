@@ -1,5 +1,5 @@
 {
-  "feature_id": "priority-introductions",
+  "feature_id": "priority-recommendations",
   "checkpoint_days": 30,
   "brief_version": "1.2.0",
   "generated_by": "monitoring-coordinator",
@@ -60,7 +60,7 @@
     ]
   },
   "primary_outcome": {
-    "metric": "mutual_connection_rate",
+    "metric": "recommendation_engagement_rate",
     "checkpoint_value": 0.186516,
     "treatment_vs_control_relative_pct": 8.3596,
     "expected_range_pct": [
@@ -69,22 +69,22 @@
     ],
     "verdict": "not_measurable",
     "evidence_refs": [
-      "EV-MOV-mutual-connection-rate-d30"
+      "EV-MOV-recommendation-engagement-rate-d30"
     ]
   },
-  "executive_summary": "Day-30 checkpoint on Priority Introductions cannot be completed. Only 12 of 30 checkpoint days and 10 of 30 pre-period days are present, so pre/post comparisons are not like-for-like. market=DE is required by the launch contract and absent from the metrics store entirely. There is no instrumentation coverage for Android, so measurement integrity is unverified for half the target platforms. Cell sizes are roughly two orders of magnitude below normal and every observed movement is inside sampling noise at this scale. No conclusion about the feature is supportable from this data. Escalating rather than reporting a result.",
+  "executive_summary": "Day-30 checkpoint on Priority Recommendations cannot be completed. Only 12 of 30 checkpoint days and 10 of 30 pre-period days are present, so pre/post comparisons are not like-for-like. market=DE is required by the launch contract and absent from the metrics store entirely. There is no instrumentation coverage for Android, so measurement integrity is unverified for half the target platforms. Cell sizes are roughly two orders of magnitude below normal and every observed movement is inside sampling noise at this scale. No conclusion about the feature is supportable from this data. Escalating rather than reporting a result.",
   "segment_findings": [],
   "facts": [
     {
       "statement": "The checkpoint window covers 12 of 30 days and the pre-period 10 of 30, so the two periods are not comparable.",
       "evidence_refs": [
-        "EV-MOV-mutual-connection-rate-d30"
+        "EV-MOV-recommendation-engagement-rate-d30"
       ]
     },
     {
       "statement": "market=DE is required by the launch contract and has no rows in the metrics store. This is missing data, not a zero.",
       "evidence_refs": [
-        "EV-SEG-mutual-connection-rate-platform-market-d30"
+        "EV-SEG-recommendation-engagement-rate-platform-market-d30"
       ]
     },
     {
@@ -102,7 +102,7 @@
       "rationale": "The inputs required by the launch contract are not available, so no reportable result exists yet.",
       "blocks_product_decision": true,
       "evidence_refs": [
-        "EV-MOV-mutual-connection-rate-d30"
+        "EV-MOV-recommendation-engagement-rate-d30"
       ]
     },
     {
@@ -111,7 +111,7 @@
       "rationale": "A gap of this shape usually indicates a pipeline problem, not a genuine absence of users.",
       "blocks_product_decision": false,
       "evidence_refs": [
-        "EV-MOV-mutual-connection-rate-d30"
+        "EV-MOV-recommendation-engagement-rate-d30"
       ]
     }
   ],
@@ -147,12 +147,12 @@
       "summary": "Deterministic tool output cited by this report."
     },
     {
-      "evidence_id": "EV-MOV-mutual-connection-rate-d30",
+      "evidence_id": "EV-MOV-recommendation-engagement-rate-d30",
       "tool": "metric_movement",
       "summary": "Deterministic tool output cited by this report."
     },
     {
-      "evidence_id": "EV-SEG-mutual-connection-rate-platform-market-d30",
+      "evidence_id": "EV-SEG-recommendation-engagement-rate-platform-market-d30",
       "tool": "segment_breakdown",
       "summary": "Deterministic tool output cited by this report."
     }

@@ -1,5 +1,5 @@
 {
-  "feature_id": "priority-introductions",
+  "feature_id": "priority-recommendations",
   "checkpoint_days": 30,
   "brief_version": "1.2.0",
   "generated_by": "monitoring-coordinator",
@@ -56,7 +56,7 @@
     ]
   },
   "primary_outcome": {
-    "metric": "mutual_connection_rate",
+    "metric": "recommendation_engagement_rate",
     "checkpoint_value": 0.185118,
     "treatment_vs_control_relative_pct": 2.6817,
     "expected_range_pct": [
@@ -65,10 +65,10 @@
     ],
     "verdict": "within_expected_range",
     "evidence_refs": [
-      "EV-MOV-mutual-connection-rate-d30"
+      "EV-MOV-recommendation-engagement-rate-d30"
     ]
   },
-  "executive_summary": "Day-30 checkpoint on Priority Introductions: the primary outcome is healthy at 2.6817% treatment vs control. Subscription conversion in Android/GB fell 10.9881% over the window, and the decline is real \u2014 the funnel moves at checkout and stays down through activation, and instrumentation is healthy. It cannot be attributed to Priority Introductions: the movement appears in the control arm at -9.5416% against -12.3748% in treatment, and EXP-4502, a single-page checkout redesign, is running on 60% of exactly this segment for exactly this period. Two explanations remain live and this checkpoint cannot separate them. Escalating.",
+  "executive_summary": "Day-30 checkpoint on Priority Recommendations: the primary outcome is healthy at 2.6817% treatment vs control. Subscription conversion in Android/GB fell 10.9881% over the window, and the decline is real \u2014 the funnel moves at checkout and stays down through activation, and instrumentation is healthy. It cannot be attributed to Priority Recommendations: the movement appears in the control arm at -9.5416% against -12.3748% in treatment, and EXP-4502, a single-page checkout redesign, is running on 60% of exactly this segment for exactly this period. Two explanations remain live and this checkpoint cannot separate them. Escalating.",
   "segment_findings": [
     {
       "segment": "Android/GB",
@@ -108,9 +108,9 @@
       ]
     },
     {
-      "statement": "mutual_connection_rate is 2.6817% treatment vs control, inside the contract's expected range.",
+      "statement": "recommendation_engagement_rate is 2.6817% treatment vs control, inside the contract's expected range.",
       "evidence_refs": [
-        "EV-MOV-mutual-connection-rate-d30"
+        "EV-MOV-recommendation-engagement-rate-d30"
       ]
     }
   ],
@@ -137,7 +137,7 @@
       "ruled_out": false
     },
     {
-      "statement": "Priority Introductions could have contributed to the decline by diverting attention from the paywall.",
+      "statement": "Priority Recommendations could have contributed to the decline by diverting attention from the paywall.",
       "supporting_evidence_refs": [],
       "contradicting_evidence_refs": [
         "EV-SEG-subscription-conversion-rate-platform-market-android-gb-d30"
@@ -149,7 +149,7 @@
   ],
   "recommended_actions": [
     {
-      "action": "Do not attribute the Android/GB conversion decline to Priority Introductions in any onward reporting until EXP-4502 assignment is separated out.",
+      "action": "Do not attribute the Android/GB conversion decline to Priority Recommendations in any onward reporting until EXP-4502 assignment is separated out.",
       "owner": "lifecycle-analytics",
       "rationale": "The movement is symmetric across arms and an overlapping experiment covers 60% of the cell. Attribution is not available from this checkpoint.",
       "blocks_product_decision": true,
@@ -204,7 +204,7 @@
       "summary": "Deterministic tool output cited by this report."
     },
     {
-      "evidence_id": "EV-MOV-mutual-connection-rate-d30",
+      "evidence_id": "EV-MOV-recommendation-engagement-rate-d30",
       "tool": "metric_movement",
       "summary": "Deterministic tool output cited by this report."
     },

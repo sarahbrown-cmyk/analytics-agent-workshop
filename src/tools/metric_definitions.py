@@ -38,22 +38,22 @@ else:
 DEFINITIONS: dict[str, dict] = {
     "feature_adoption_rate": {
         "display_name": "Feature adoption rate",
-        "numerator": "Eligible users who sent at least one priority introduction in the period",
+        "numerator": "Eligible users who saved at least one priority recommendation in the period",
         "denominator": "Eligible users in the period",
         "grain": "user",
         "owner": "lifecycle-analytics",
         "version": "3.1.0",
-        "depends_on_events": ["priority_intro_sent"],
+        "depends_on_events": ["priority_rec_saved"],
         "notes": "Undefined for the control arm — control users cannot adopt a feature they cannot see.",
     },
-    "mutual_connection_rate": {
-        "display_name": "Mutual connection rate",
-        "numerator": "Users with at least one new mutual connection in the period",
+    "recommendation_engagement_rate": {
+        "display_name": "Recommendation engagement rate",
+        "numerator": "Users with at least one new engaged recommendation in the period",
         "denominator": "Active users in the period",
         "grain": "user",
         "owner": "core-analytics",
         "version": "5.4.2",
-        "depends_on_events": ["connection_created"],
+        "depends_on_events": ["recommendation_engaged"],
         "notes": "Server-side derived. Not dependent on client instrumentation.",
     },
     "subscription_conversion_rate": {

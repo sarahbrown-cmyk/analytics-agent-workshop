@@ -41,7 +41,7 @@ for extra in (REPO_ROOT / "src", REPO_ROOT / "evaluations"):
 from coordinator import run_checkpoint  # noqa: E402
 from tools import _yaml  # noqa: E402
 
-BRIEF_PATH = REPO_ROOT / "feature_briefs" / "priority-introductions.yaml"
+BRIEF_PATH = REPO_ROOT / "feature_briefs" / "priority-recommendations.yaml"
 CASES_DIR = REPO_ROOT / "evaluations" / "cases"
 SOLUTION_DIR = REPO_ROOT / "solutions" / "completed" / "reports"
 
@@ -227,8 +227,8 @@ def case_01(bundle, brief, flawed: bool) -> dict:
     adoption = movement(bundle, "feature_adoption_rate")
     report["primary_outcome"] = primary_block(bundle, brief)
     report["executive_summary"] = (
-        f"Day-30 checkpoint on Priority Introductions is within contract expectations. "
-        f"The primary outcome, mutual_connection_rate, is "
+        f"Day-30 checkpoint on Priority Recommendations is within contract expectations. "
+        f"The primary outcome, recommendation_engagement_rate, is "
         f"{primary['difference_in_differences_pct']}% higher in treatment than control, "
         f"inside the expected 2.0-4.0% band. All three guardrails are within threshold at "
         f"aggregate and segment level, instrumentation completeness is above the 95% floor "
@@ -239,7 +239,7 @@ def case_01(bundle, brief, flawed: bool) -> dict:
     report["facts"] = [
         {
             "statement": (
-                f"mutual_connection_rate is {primary['difference_in_differences_pct']}% higher "
+                f"recommendation_engagement_rate is {primary['difference_in_differences_pct']}% higher "
                 f"in treatment than control over the checkpoint window, against a minimum "
                 f"detectable effect of {primary['minimum_detectable_effect_pct']}%."
             ),
@@ -286,11 +286,11 @@ def case_02(bundle, brief, flawed: bool) -> dict:
 
     report["primary_outcome"] = primary_block(bundle, brief)
     report["executive_summary"] = (
-        f"Day-30 checkpoint on Priority Introductions shows no detectable aggregate effect: "
-        f"mutual_connection_rate is {primary['difference_in_differences_pct']}% treatment vs "
+        f"Day-30 checkpoint on Priority Recommendations shows no detectable aggregate effect: "
+        f"recommendation_engagement_rate is {primary['difference_in_differences_pct']}% treatment vs "
         f"control, below the {primary['minimum_detectable_effect_pct']}% minimum detectable "
         f"effect. That aggregate is misleading. iOS/DE treatment users show a "
-        f"{ios_de['relative_change_pct']}% decline in mutual_connection_rate with no "
+        f"{ios_de['relative_change_pct']}% decline in recommendation_engagement_rate with no "
         f"equivalent movement in the control arm, which is consistent with a genuine "
         f"feature effect in that market and may be offsetting gains elsewhere. "
         f"Instrumentation is healthy across all events, so this is unlikely to be a "
@@ -301,7 +301,7 @@ def case_02(bundle, brief, flawed: bool) -> dict:
         {
             "segment": "iOS/DE",
             "observation": (
-                f"mutual_connection_rate in iOS/DE moved {ios_de['relative_change_pct']}% over "
+                f"recommendation_engagement_rate in iOS/DE moved {ios_de['relative_change_pct']}% over "
                 f"the window, accounting for {ios_de['share_of_absolute_movement_pct']}% of total "
                 f"absolute movement. The treatment arm moved "
                 f"{ios_de['arm_symmetry']['treatment_relative_change_pct']}% against "
@@ -319,7 +319,7 @@ def case_02(bundle, brief, flawed: bool) -> dict:
     report["facts"] = [
         {
             "statement": (
-                f"Aggregate mutual_connection_rate is {primary['difference_in_differences_pct']}% "
+                f"Aggregate recommendation_engagement_rate is {primary['difference_in_differences_pct']}% "
                 f"treatment vs control, below the "
                 f"{primary['minimum_detectable_effect_pct']}% minimum detectable effect."
             ),
@@ -327,7 +327,7 @@ def case_02(bundle, brief, flawed: bool) -> dict:
         },
         {
             "statement": (
-                f"mutual_connection_rate in iOS/DE fell {abs(ios_de['relative_change_pct'])}% over "
+                f"recommendation_engagement_rate in iOS/DE fell {abs(ios_de['relative_change_pct'])}% over "
                 f"the window, with the movement confined to the treatment arm."
             ),
             "evidence_refs": [ios_de["evidence_id"]],
@@ -350,14 +350,14 @@ def case_02(bundle, brief, flawed: bool) -> dict:
     report["hypotheses"] = [
         {
             "statement": (
-                "Priority Introductions may suppress mutual connections for German iOS users, "
-                "possibly through introduction ranking that suits the local liquidity pattern poorly."
+                "Priority Recommendations may suppress engaged recommendations for German iOS users, "
+                "possibly through recommendation ranking that suits the local catalogue depth poorly."
             ),
             "supporting_evidence_refs": [ios_de["evidence_id"]],
             "contradicting_evidence_refs": [primary["evidence_id"]],
             "confidence": "medium",
             "how_to_test": (
-                "Compare intro acceptance rate by recipient bucket within iOS/DE treatment "
+                "Compare recommendation engagement rate by recipient bucket within iOS/DE treatment "
                 "against iOS/US treatment; if ranking is the mechanism, acceptance should differ."
             ),
             "ruled_out": False,
@@ -432,12 +432,12 @@ def case_03(bundle, brief, flawed: bool) -> dict:
 
     report["primary_outcome"] = primary_block(bundle, brief)
     report["executive_summary"] = (
-        f"Day-30 checkpoint on Priority Introductions: the primary outcome is healthy at "
+        f"Day-30 checkpoint on Priority Recommendations: the primary outcome is healthy at "
         f"{primary['difference_in_differences_pct']}% treatment vs control, inside the expected "
         f"band. Recorded feature adoption on Android/US falls "
         f"{abs(android_us['within_window']['second_vs_first_half_pct'])}% between the first and "
         f"second half of the window, but this is a measurement problem rather than a change in "
-        f"user behaviour: priority_intro_sent completeness on Android/US is "
+        f"user behaviour: priority_rec_saved completeness on Android/US is "
         f"{below['mean_completeness_pct']}% against a 95% floor, the event's schema version "
         f"changed inside the window, and the funnel step after it is unchanged. Recorded "
         f"adoption for Android/US is not usable evidence about users this period. Escalating "
@@ -463,7 +463,7 @@ def case_03(bundle, brief, flawed: bool) -> dict:
     report["facts"] = [
         {
             "statement": (
-                f"priority_intro_sent completeness on Android/US averages "
+                f"priority_rec_saved completeness on Android/US averages "
                 f"{below['mean_completeness_pct']}% over the window against a 95% contract floor, "
                 f"with the event's schema version changing inside the window."
             ),
@@ -483,7 +483,7 @@ def case_03(bundle, brief, flawed: bool) -> dict:
         },
         {
             "statement": (
-                f"mutual_connection_rate is {primary['difference_in_differences_pct']}% treatment "
+                f"recommendation_engagement_rate is {primary['difference_in_differences_pct']}% treatment "
                 f"vs control, inside the contract's expected range."
             ),
             "evidence_refs": [primary["evidence_id"]],
@@ -499,7 +499,7 @@ def case_03(bundle, brief, flawed: bool) -> dict:
     report["hypotheses"] = [
         {
             "statement": (
-                "The priority_intro_sent event is under-reporting on Android/US, most likely "
+                "The priority_rec_saved event is under-reporting on Android/US, most likely "
                 "introduced by the rel-1058 analytics SDK upgrade, which shipped to that segment "
                 "inside the window."
             ),
@@ -511,14 +511,14 @@ def case_03(bundle, brief, flawed: bool) -> dict:
             "contradicting_evidence_refs": [],
             "confidence": "high",
             "how_to_test": (
-                "Compare client event volume against server-side intro records for Android/US in "
+                "Compare client event volume against server-side recommendation records for Android/US in "
                 "the affected period; a gap confirms client under-reporting."
             ),
             "ruled_out": False,
         },
         {
             "statement": (
-                "Android/US users could genuinely be sending fewer introductions, which would be "
+                "Android/US users could genuinely be saving fewer recommendations, which would be "
                 "a real adoption problem."
             ),
             "supporting_evidence_refs": [android_us["evidence_id"]],
@@ -526,7 +526,7 @@ def case_03(bundle, brief, flawed: bool) -> dict:
             "confidence": "low",
             "how_to_test": (
                 "A genuine drop would reduce every downstream funnel step. The step after "
-                "intro_sent is unchanged, which argues strongly against this."
+                "recommendation_saved is unchanged, which argues strongly against this."
             ),
             "ruled_out": True,
         },
@@ -535,7 +535,7 @@ def case_03(bundle, brief, flawed: bool) -> dict:
         {
             "action": (
                 "Treat Android/US adoption figures for this window as unreportable until "
-                "priority_intro_sent is fixed and backfilled."
+                "priority_rec_saved is fixed and backfilled."
             ),
             "owner": "lifecycle-analytics",
             "rationale": (
@@ -546,7 +546,7 @@ def case_03(bundle, brief, flawed: bool) -> dict:
             "evidence_refs": [below["evidence_id"]],
         },
         {
-            "action": "Raise the priority_intro_sent schema change with the Android platform team, referencing rel-1058.",
+            "action": "Raise the priority_rec_saved schema change with the Android platform team, referencing rel-1058.",
             "owner": "product-discovery",
             "rationale": "The degradation begins with a release that shipped to exactly this segment.",
             "blocks_product_decision": False,
@@ -557,7 +557,7 @@ def case_03(bundle, brief, flawed: bool) -> dict:
         "overall_confidence": "medium",
         "escalate": True,
         "escalation_reasons": [
-            f"priority_intro_sent completeness on Android/US is {below['mean_completeness_pct']}%, "
+            f"priority_rec_saved completeness on Android/US is {below['mean_completeness_pct']}%, "
             f"below the 95% contract floor, so metrics derived from it are not trustworthy.",
             "Adoption reporting for Android/US must not go onward until measurement is repaired.",
         ],
@@ -582,10 +582,10 @@ def case_04(bundle, brief, flawed: bool) -> dict:
         # claim the evidence cannot carry — while the report's own segment finding
         # records that control moved too.
         report["executive_summary"] = (
-            f"Day-30 checkpoint on Priority Introductions: the primary outcome is healthy at "
+            f"Day-30 checkpoint on Priority Recommendations: the primary outcome is healthy at "
             f"{primary['difference_in_differences_pct']}% treatment vs control. However, "
             f"subscription conversion in Android/GB fell "
-            f"{abs(android_gb['relative_change_pct'])}% over the window. Priority Introductions "
+            f"{abs(android_gb['relative_change_pct'])}% over the window. Priority Recommendations "
             f"reduced subscription conversion for Android users in GB, most likely by diverting "
             f"attention from the paywall, and this is why the segment declined. Recommend "
             f"reviewing the paywall placement for Android/GB."
@@ -623,7 +623,7 @@ def case_04(bundle, brief, flawed: bool) -> dict:
             },
             {
                 "statement": (
-                    f"mutual_connection_rate is {primary['difference_in_differences_pct']}% "
+                    f"recommendation_engagement_rate is {primary['difference_in_differences_pct']}% "
                     f"treatment vs control, inside the contract's expected range."
                 ),
                 "evidence_refs": [primary["evidence_id"]],
@@ -632,7 +632,7 @@ def case_04(bundle, brief, flawed: bool) -> dict:
         report["hypotheses"] = [
             {
                 "statement": (
-                    "Priority Introductions diverted Android/GB users away from the paywall and "
+                    "Priority Recommendations diverted Android/GB users away from the paywall and "
                     "reduced conversion."
                 ),
                 "supporting_evidence_refs": [android_gb["evidence_id"]],
@@ -660,12 +660,12 @@ def case_04(bundle, brief, flawed: bool) -> dict:
         return report
 
     report["executive_summary"] = (
-        f"Day-30 checkpoint on Priority Introductions: the primary outcome is healthy at "
+        f"Day-30 checkpoint on Priority Recommendations: the primary outcome is healthy at "
         f"{primary['difference_in_differences_pct']}% treatment vs control. Subscription "
         f"conversion in Android/GB fell {abs(android_gb['relative_change_pct'])}% over the "
         f"window, and the decline is real — the funnel moves at checkout and stays down through "
         f"activation, and instrumentation is healthy. It cannot be attributed to Priority "
-        f"Introductions: the movement appears in the control arm at "
+        f"Recommendations: the movement appears in the control arm at "
         f"{symmetry['control_relative_change_pct']}% against "
         f"{symmetry['treatment_relative_change_pct']}% in treatment, and EXP-4502, a single-page "
         f"checkout redesign, is running on 60% of exactly this segment for exactly this period. "
@@ -723,7 +723,7 @@ def case_04(bundle, brief, flawed: bool) -> dict:
         },
         {
             "statement": (
-                f"mutual_connection_rate is {primary['difference_in_differences_pct']}% treatment "
+                f"recommendation_engagement_rate is {primary['difference_in_differences_pct']}% treatment "
                 f"vs control, inside the contract's expected range."
             ),
             "evidence_refs": [primary["evidence_id"]],
@@ -760,7 +760,7 @@ def case_04(bundle, brief, flawed: bool) -> dict:
         },
         {
             "statement": (
-                "Priority Introductions could have contributed to the decline by diverting "
+                "Priority Recommendations could have contributed to the decline by diverting "
                 "attention from the paywall."
             ),
             "supporting_evidence_refs": [],
@@ -777,7 +777,7 @@ def case_04(bundle, brief, flawed: bool) -> dict:
     report["recommended_actions"] = [
         {
             "action": (
-                "Do not attribute the Android/GB conversion decline to Priority Introductions in "
+                "Do not attribute the Android/GB conversion decline to Priority Recommendations in "
                 "any onward reporting until EXP-4502 assignment is separated out."
             ),
             "owner": "lifecycle-analytics",
@@ -823,7 +823,7 @@ def case_05(bundle, brief, flawed: bool) -> dict:
 
     report["primary_outcome"] = primary_block(bundle, brief, override="not_measurable")
     report["executive_summary"] = (
-        f"Day-30 checkpoint on Priority Introductions cannot be completed. Only "
+        f"Day-30 checkpoint on Priority Recommendations cannot be completed. Only "
         f"{bundle['window']['post_days_available']} of 30 checkpoint days and "
         f"{bundle['window']['pre_days_available']} of 30 pre-period days are present, so pre/post "
         f"comparisons are not like-for-like. {', '.join(absent)} is required by the launch "
@@ -926,10 +926,10 @@ def primary_scenario(bundle, brief, flawed: bool = False) -> dict:
 
     report["primary_outcome"] = primary_block(bundle, brief)
     report["executive_summary"] = (
-        f"Day-30 checkpoint on Priority Introductions. The feature is performing as "
+        f"Day-30 checkpoint on Priority Recommendations. The feature is performing as "
         f"intended: adoption among eligible treatment users is "
         f"{round((adoption.get('treatment', {}).get('value') or 0) * 100, 1)}% and the "
-        f"primary outcome, mutual_connection_rate, is "
+        f"primary outcome, recommendation_engagement_rate, is "
         f"{primary['difference_in_differences_pct']}% higher in treatment than control, "
         f"inside the contract's expected band. Separately, the payment_completion_rate "
         f"guardrail is breached in Android/GB. That breach is a measurement failure, not "
@@ -937,7 +937,7 @@ def primary_scenario(bundle, brief, flawed: bool = False) -> dict:
         f"at {below['mean_completeness_pct']}% completeness against a 95% floor, "
         f"server-side subscription activations are unchanged, and observed activations "
         f"now exceed observed payments, which is not possible. The movement also appears "
-        f"in the control arm, so Priority Introductions cannot be its cause. Escalating "
+        f"in the control arm, so Priority Recommendations cannot be its cause. Escalating "
         f"on the guardrail breach. No rollback is warranted; the GB conversion figures "
         f"for this window must not be reported onward until the event is repaired."
     )
@@ -967,7 +967,7 @@ def primary_scenario(bundle, brief, flawed: bool = False) -> dict:
     report["facts"] = [
         {
             "statement": (
-                f"mutual_connection_rate is {primary['difference_in_differences_pct']}% "
+                f"recommendation_engagement_rate is {primary['difference_in_differences_pct']}% "
                 f"higher in treatment than control, inside the contract's expected "
                 f"2.0-4.0% band."
             ),
@@ -1059,7 +1059,7 @@ def primary_scenario(bundle, brief, flawed: bool = False) -> dict:
         },
         {
             "statement": (
-                "Priority Introductions could have suppressed conversion for Android/GB "
+                "Priority Recommendations could have suppressed conversion for Android/GB "
                 "users."
             ),
             "supporting_evidence_refs": [],

@@ -1,5 +1,5 @@
 {
-  "feature_id": "priority-introductions",
+  "feature_id": "priority-recommendations",
   "checkpoint_days": 30,
   "brief_version": "1.2.0",
   "generated_by": "monitoring-coordinator",
@@ -56,7 +56,7 @@
     ]
   },
   "primary_outcome": {
-    "metric": "mutual_connection_rate",
+    "metric": "recommendation_engagement_rate",
     "checkpoint_value": 0.185116,
     "treatment_vs_control_relative_pct": 2.141,
     "expected_range_pct": [
@@ -65,16 +65,16 @@
     ],
     "verdict": "within_expected_range",
     "evidence_refs": [
-      "EV-MOV-mutual-connection-rate-d30"
+      "EV-MOV-recommendation-engagement-rate-d30"
     ]
   },
-  "executive_summary": "Day-30 checkpoint on Priority Introductions is within contract expectations. The primary outcome, mutual_connection_rate, is 2.141% higher in treatment than control, inside the expected 2.0-4.0% band. All three guardrails are within threshold at aggregate and segment level, instrumentation completeness is above the 95% floor for every critical event, and no required segment is missing. No escalation is required and no further investigation is warranted before the day-60 checkpoint.",
+  "executive_summary": "Day-30 checkpoint on Priority Recommendations is within contract expectations. The primary outcome, recommendation_engagement_rate, is 2.141% higher in treatment than control, inside the expected 2.0-4.0% band. All three guardrails are within threshold at aggregate and segment level, instrumentation completeness is above the 95% floor for every critical event, and no required segment is missing. No escalation is required and no further investigation is warranted before the day-60 checkpoint.",
   "segment_findings": [],
   "facts": [
     {
-      "statement": "mutual_connection_rate is 2.141% higher in treatment than control over the checkpoint window, against a minimum detectable effect of 1.2%.",
+      "statement": "recommendation_engagement_rate is 2.141% higher in treatment than control over the checkpoint window, against a minimum detectable effect of 1.2%.",
       "evidence_refs": [
-        "EV-MOV-mutual-connection-rate-d30"
+        "EV-MOV-recommendation-engagement-rate-d30"
       ]
     },
     {
@@ -98,7 +98,7 @@
       "rationale": "Primary outcome inside the expected band, no guardrail movement, measurement healthy.",
       "blocks_product_decision": false,
       "evidence_refs": [
-        "EV-MOV-mutual-connection-rate-d30"
+        "EV-MOV-recommendation-engagement-rate-d30"
       ]
     }
   ],
@@ -135,7 +135,7 @@
       "summary": "Deterministic tool output cited by this report."
     },
     {
-      "evidence_id": "EV-MOV-mutual-connection-rate-d30",
+      "evidence_id": "EV-MOV-recommendation-engagement-rate-d30",
       "tool": "metric_movement",
       "summary": "Deterministic tool output cited by this report."
     }

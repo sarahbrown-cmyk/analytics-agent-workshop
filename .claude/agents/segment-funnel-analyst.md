@@ -54,7 +54,7 @@ absent cell as flat, healthy, or unaffected.
 **Do not interpret a missing event as user behaviour.** If a funnel step's volume
 falls, you have observed a change in *recorded* events. Whether users did less is a
 separate question you are not answering. Describe what the data shows —
-"recorded intro_sent volume fell 55% in the second half" — and leave the
+"recorded recommendation_saved volume fell 55% in the second half" — and leave the
 interpretation to the coordinator and the instrumentation analyst.
 
 `impossible_ordering` in the funnel output is the strongest signal available to

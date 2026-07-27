@@ -28,7 +28,7 @@ live, and where do the synthetic data and test cases live? Show me the paths.
 ```
 
 ```
-Read feature_briefs/priority-introductions.yaml and explain it to me as if I were
+Read feature_briefs/priority-recommendations.yaml and explain it to me as if I were
 the analyst who has to run this checkpoint. What does this contract commit us to?
 ```
 
@@ -44,7 +44,7 @@ you change anything.
 ```
 
 ```
-In feature_briefs/priority-introductions.yaml, the payment_completion_rate guardrail
+In feature_briefs/priority-recommendations.yaml, the payment_completion_rate guardrail
 breaches at a 3% relative drop. Change it to 2% so we catch smaller movements. Then
 run python3 src/tools/guardrail_check.py --checkpoint 30 and tell me what changed
 about the result.
@@ -73,7 +73,7 @@ worse, or neither. Quote the numbers.
 ## Section 4 — Read the launch contract
 
 ```
-Acting as the monitoring coordinator, read feature_briefs/priority-introductions.yaml
+Acting as the monitoring coordinator, read feature_briefs/priority-recommendations.yaml
 and tell me, before touching any data: what does success mean for this feature, which
 metrics matter, which segments must be checked no matter what, which guardrails must
 not deteriorate, and which checkpoint we are running?
@@ -118,13 +118,13 @@ us?
 ```
 Run the full day-30 checkpoint using the monitoring-coordinator agent. Delegate to
 the specialists, have the analytical reviewer challenge the draft, write the report
-to reports/priority-introductions-day30.json, and validate it with report_contract.py.
+to reports/priority-recommendations-day30.json, and validate it with report_contract.py.
 Tell me if the contract check fails and why.
 ```
 
 ```
 Render the report as markdown so I can read it the way a stakeholder would:
-python3 src/coordinator/report_contract.py reports/priority-introductions-day30.json --render
+python3 src/coordinator/report_contract.py reports/priority-recommendations-day30.json --render
 ```
 
 ```

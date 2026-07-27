@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the synthetic dataset for the Priority Introductions workshop.
+"""Generate the synthetic dataset for the Priority Recommendations workshop.
 
 Everything in this repository is fabricated. No Match Group data, metric
 definition, or system is represented here. The generator is seeded, so the
@@ -70,7 +70,7 @@ METRICS: tuple[MetricSpec, ...] = (
         weekly_amplitude=0.06,
     ),
     MetricSpec(
-        name="mutual_connection_rate",
+        name="recommendation_engagement_rate",
         kind="rate",
         control_base=0.1824,
         treatment_relative_lift=0.024,
@@ -117,8 +117,8 @@ METRICS: tuple[MetricSpec, ...] = (
 
 FUNNEL_STEPS = (
     "feature_impression",
-    "intro_viewed",
-    "intro_sent",
+    "recommendation_viewed",
+    "recommendation_saved",
     "paywall_viewed",
     "checkout_started",
     "payment_completed",
@@ -128,8 +128,8 @@ FUNNEL_STEPS = (
 # Step-to-step pass-through on the calm baseline.
 FUNNEL_PASS_THROUGH = {
     "feature_impression": 1.0,
-    "intro_viewed": 0.742,
-    "intro_sent": 0.518,
+    "recommendation_viewed": 0.742,
+    "recommendation_saved": 0.518,
     "paywall_viewed": 0.196,
     "checkout_started": 0.331,
     "payment_completed": 0.913,
@@ -137,9 +137,9 @@ FUNNEL_PASS_THROUGH = {
 }
 
 TRACKED_EVENTS = (
-    "priority_intro_impression",
-    "priority_intro_viewed",
-    "priority_intro_sent",
+    "priority_rec_impression",
+    "priority_rec_viewed",
+    "priority_rec_saved",
     "paywall_viewed",
     "checkout_started",
     "payment_completed",
@@ -152,9 +152,9 @@ METRIC_FUNNEL_ONSET = {
     "feature_adoption_rate": "feature_impression",
     "subscription_conversion_rate": "checkout_started",
     "payment_completion_rate": "payment_completed",
-    # mutual_connection_rate is not a step in the monetization funnel; a real
+    # recommendation_engagement_rate is not a step in the monetization funnel; a real
     # decline there shows up in segment breakdowns, not here.
-    "mutual_connection_rate": None,
+    "recommendation_engagement_rate": None,
     "session_frequency": None,
     "report_block_rate": None,
     "day7_retention_proxy": None,
@@ -164,9 +164,9 @@ METRIC_FUNNEL_ONSET = {
 # and funnel volume consistent, so the "compare against the adjacent event"
 # check in the instrumentation analyst has something real to find.
 EVENT_TO_STEP = {
-    "priority_intro_impression": "feature_impression",
-    "priority_intro_viewed": "intro_viewed",
-    "priority_intro_sent": "intro_sent",
+    "priority_rec_impression": "feature_impression",
+    "priority_rec_viewed": "recommendation_viewed",
+    "priority_rec_saved": "recommendation_saved",
     "paywall_viewed": "paywall_viewed",
     "checkout_started": "checkout_started",
     "payment_completed": "payment_completed",
@@ -265,7 +265,7 @@ BASE_RELEASES = [
         "version": "9.41.0",
         "markets": ["US", "GB", "DE", "CA"],
         "type": "app_release",
-        "summary": "Priority Introductions launch build.",
+        "summary": "Priority Recommendations launch build.",
         "touches_payments": False,
     },
     {
@@ -275,7 +275,7 @@ BASE_RELEASES = [
         "version": "9.41.0",
         "markets": ["US", "GB", "DE", "CA"],
         "type": "app_release",
-        "summary": "Priority Introductions launch build.",
+        "summary": "Priority Recommendations launch build.",
         "touches_payments": False,
     },
     {
@@ -285,7 +285,7 @@ BASE_RELEASES = [
         "version": "server-config",
         "markets": ["US", "GB", "DE", "CA"],
         "type": "server_config",
-        "summary": "Introduction ranking weight tuned for recency. No client change.",
+        "summary": "Recommendation ranking weight tuned for recency. No client change.",
         "touches_payments": False,
     },
 ]
@@ -360,7 +360,7 @@ def build_scenarios() -> dict[str, Scenario]:
     # conversion falls, in BOTH arms, starting the day the GB-only Android
     # checkout build shipped, while subscription_activated stays flat. The
     # supportable conclusion is a measurement/payment-funnel problem. The
-    # unsupportable one is "Priority Introductions hurt conversion".
+    # unsupportable one is "Priority Recommendations hurt conversion".
     scenarios["primary"] = Scenario(
         key="primary",
         seed=20260504,
@@ -401,7 +401,7 @@ def build_scenarios() -> dict[str, Scenario]:
         launch_date=LAUNCH,
         effects=[
             Effect(
-                "mutual_connection_rate",
+                "recommendation_engagement_rate",
                 0.782,
                 "2026-05-06",
                 platform="iOS",
@@ -437,7 +437,7 @@ def build_scenarios() -> dict[str, Scenario]:
             Effect("feature_adoption_rate", 0.47, "2026-05-20", platform="Android", market="US"),
         ],
         degradations=[
-            EventDegradation("priority_intro_sent", 0.44, "2026-05-20", platform="Android", market="US"),
+            EventDegradation("priority_rec_saved", 0.44, "2026-05-20", platform="Android", market="US"),
         ],
         releases=BASE_RELEASES
         + [
@@ -521,7 +521,7 @@ def build_scenarios() -> dict[str, Scenario]:
 
 
 def weekly_factor(day: date, amplitude: float) -> float:
-    """Weekend-heavy usage. Dating products are not flat across the week."""
+    """Weekend-heavy usage. Consumer apps are not flat across the week."""
     return 1.0 + amplitude * math.sin((day.weekday() + 2) / 7.0 * 2 * math.pi)
 
 

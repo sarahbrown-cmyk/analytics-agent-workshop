@@ -21,7 +21,7 @@ common way a workshop like this dies.
 
 ### 1. A missing escalation rule
 
-`feature_briefs/priority-introductions.yaml` declares six escalation triggers.
+`feature_briefs/priority-recommendations.yaml` declares six escalation triggers.
 `src/schemas/escalation_rules.yaml` enables five. `instrumentation_below_floor` is
 absent, though the check is fully implemented in `report_contract.py`.
 
@@ -76,7 +76,7 @@ Demonstrate, do not lecture. Project Claude Code and run through, in order:
 
 1. `Give me a tour of this repository...`
 2. `Where do the agent instructions live...`
-3. `Read feature_briefs/priority-introductions.yaml and explain it...`
+3. `Read feature_briefs/priority-recommendations.yaml and explain it...`
 4. One small instruction change, with the diff shown.
 5. `python3 evaluations/run_evaluations.py`
 
@@ -140,7 +140,7 @@ python3 src/tools/launch_context.py --focus-platform Android --focus-market GB
 
 The payoff line: **the honest conclusion is that a payment event stopped firing, revenue
 probably did not move, and the feature is not implicated.** The tempting conclusion is
-"Priority Introductions hurt Android conversion" — and it would have got someone to roll
+"Priority Recommendations hurt Android conversion" — and it would have got someone to roll
 back a feature that was working.
 
 Ask the room how long that investigation would have taken by hand, and how likely it is

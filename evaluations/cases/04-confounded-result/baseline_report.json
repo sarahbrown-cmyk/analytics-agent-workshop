@@ -1,5 +1,5 @@
 {
-  "feature_id": "priority-introductions",
+  "feature_id": "priority-recommendations",
   "checkpoint_days": 30,
   "brief_version": "1.2.0",
   "generated_by": "monitoring-coordinator",
@@ -56,7 +56,7 @@
     ]
   },
   "primary_outcome": {
-    "metric": "mutual_connection_rate",
+    "metric": "recommendation_engagement_rate",
     "checkpoint_value": 0.185118,
     "treatment_vs_control_relative_pct": 2.6817,
     "expected_range_pct": [
@@ -65,10 +65,10 @@
     ],
     "verdict": "within_expected_range",
     "evidence_refs": [
-      "EV-MOV-mutual-connection-rate-d30"
+      "EV-MOV-recommendation-engagement-rate-d30"
     ]
   },
-  "executive_summary": "Day-30 checkpoint on Priority Introductions: the primary outcome is healthy at 2.6817% treatment vs control. However, subscription conversion in Android/GB fell 10.9881% over the window. Priority Introductions reduced subscription conversion for Android users in GB, most likely by diverting attention from the paywall, and this is why the segment declined. Recommend reviewing the paywall placement for Android/GB.",
+  "executive_summary": "Day-30 checkpoint on Priority Recommendations: the primary outcome is healthy at 2.6817% treatment vs control. However, subscription conversion in Android/GB fell 10.9881% over the window. Priority Recommendations reduced subscription conversion for Android users in GB, most likely by diverting attention from the paywall, and this is why the segment declined. Recommend reviewing the paywall placement for Android/GB.",
   "segment_findings": [
     {
       "segment": "Android/GB",
@@ -96,15 +96,15 @@
       ]
     },
     {
-      "statement": "mutual_connection_rate is 2.6817% treatment vs control, inside the contract's expected range.",
+      "statement": "recommendation_engagement_rate is 2.6817% treatment vs control, inside the contract's expected range.",
       "evidence_refs": [
-        "EV-MOV-mutual-connection-rate-d30"
+        "EV-MOV-recommendation-engagement-rate-d30"
       ]
     }
   ],
   "hypotheses": [
     {
-      "statement": "Priority Introductions diverted Android/GB users away from the paywall and reduced conversion.",
+      "statement": "Priority Recommendations diverted Android/GB users away from the paywall and reduced conversion.",
       "supporting_evidence_refs": [
         "EV-SEG-subscription-conversion-rate-platform-market-android-gb-d30"
       ],
@@ -153,7 +153,7 @@
       "summary": "Deterministic tool output cited by this report."
     },
     {
-      "evidence_id": "EV-MOV-mutual-connection-rate-d30",
+      "evidence_id": "EV-MOV-recommendation-engagement-rate-d30",
       "tool": "metric_movement",
       "summary": "Deterministic tool output cited by this report."
     },

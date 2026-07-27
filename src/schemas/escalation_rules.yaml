@@ -64,7 +64,7 @@ rules:
 # ----------------------------------------------------------------------------
 # NOTE FOR THE WORKSHOP
 #
-# The launch contract at feature_briefs/priority-introductions.yaml lists six
+# The launch contract at feature_briefs/priority-recommendations.yaml lists six
 # escalation triggers. Count the rules above. One trigger in the contract has no
 # rule here, which is why this system currently reports an instrumentation
 # failure as an ordinary finding and does not escalate it.

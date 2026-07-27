@@ -16,7 +16,7 @@ way past them:
    The agent does not get to decide whether it feels confident enough.
 
 Usage:
-    python3 src/coordinator/report_contract.py reports/priority-introductions-day30.json
+    python3 src/coordinator/report_contract.py reports/priority-recommendations-day30.json
     python3 src/coordinator/report_contract.py <report.json> --evidence <bundle.json>
     python3 src/coordinator/report_contract.py <report.json> --render
 """
@@ -39,7 +39,7 @@ from tools import _yaml, metric_definitions  # noqa: E402
 SCHEMA_PATH = REPO_ROOT / "src" / "schemas" / "monitoring_report.schema.json"
 ESCALATION_RULES_PATH = REPO_ROOT / "src" / "schemas" / "escalation_rules.yaml"
 RUBRIC_PATH = REPO_ROOT / "src" / "reviewers" / "review_rubric.yaml"
-DEFAULT_BRIEF = REPO_ROOT / "feature_briefs" / "priority-introductions.yaml"
+DEFAULT_BRIEF = REPO_ROOT / "feature_briefs" / "priority-recommendations.yaml"
 
 # Tolerance when comparing a number in the report against the tool output it cites.
 NUMERIC_TOLERANCE_PCT = 0.15

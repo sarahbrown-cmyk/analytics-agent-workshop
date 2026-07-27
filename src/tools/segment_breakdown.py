@@ -16,7 +16,7 @@ model must not be asked to work out for itself:
 
 Usage:
     python3 src/tools/segment_breakdown.py --metric subscription_conversion_rate
-    python3 src/tools/segment_breakdown.py --metric mutual_connection_rate --by platform,market
+    python3 src/tools/segment_breakdown.py --metric recommendation_engagement_rate --by platform,market
     python3 src/tools/segment_breakdown.py --metric payment_completion_rate --by market --platform Android
 """
 

@@ -61,7 +61,7 @@ A handoff matching `src/schemas/specialist_finding.schema.json`:
   "out_of_scope": ["Root cause", "Segment attribution", "Measurement integrity"],
   "findings": [
     {
-      "finding": "mutual_connection_rate is 2.25% higher in treatment than control, inside the contract's expected 2.0-4.0% band.",
+      "finding": "recommendation_engagement_rate is 2.25% higher in treatment than control, inside the contract's expected 2.0-4.0% band.",
       "evidence_refs": ["EV-MOV-mutual-connection-rate-d30"],
       "confidence": "high",
       "limitations": "Arm comparison only; no segment view in this scope.",

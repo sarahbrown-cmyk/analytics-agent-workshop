@@ -2,7 +2,7 @@
 """Detect causal claims and false certainty in a report.
 
 Language is where analytical discipline actually leaks. "Android conversion fell
-33% in GB" and "Priority Introductions reduced Android conversion in GB by 33%"
+33% in GB" and "Priority Recommendations reduced Android conversion in GB by 33%"
 can be produced from the same tool output, cite the same evidence id, and pass
 every schema check — but only one of them is supportable, and the other one gets
 a feature rolled back.
@@ -22,7 +22,7 @@ which is the point of putting this layer underneath the model reviewer rather
 than trusting the reviewer alone.
 
 Usage:
-    python3 src/reviewers/causal_language.py reports/priority-introductions-day30.json
+    python3 src/reviewers/causal_language.py reports/priority-recommendations-day30.json
 """
 
 from __future__ import annotations

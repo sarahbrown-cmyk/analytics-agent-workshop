@@ -33,7 +33,7 @@ assemble.
 ### 1. Read the launch contract
 
 ```bash
-cat feature_briefs/priority-introductions.yaml
+cat feature_briefs/priority-recommendations.yaml
 ```
 
 Establish and state, before touching data:

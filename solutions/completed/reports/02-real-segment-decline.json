@@ -1,5 +1,5 @@
 {
-  "feature_id": "priority-introductions",
+  "feature_id": "priority-recommendations",
   "checkpoint_days": 30,
   "brief_version": "1.2.0",
   "generated_by": "monitoring-coordinator",
@@ -56,7 +56,7 @@
     ]
   },
   "primary_outcome": {
-    "metric": "mutual_connection_rate",
+    "metric": "recommendation_engagement_rate",
     "checkpoint_value": 0.183453,
     "treatment_vs_control_relative_pct": 0.5662,
     "expected_range_pct": [
@@ -65,18 +65,18 @@
     ],
     "verdict": "no_detectable_change",
     "evidence_refs": [
-      "EV-MOV-mutual-connection-rate-d30"
+      "EV-MOV-recommendation-engagement-rate-d30"
     ]
   },
-  "executive_summary": "Day-30 checkpoint on Priority Introductions shows no detectable aggregate effect: mutual_connection_rate is 0.5662% treatment vs control, below the 1.2% minimum detectable effect. That aggregate is misleading. iOS/DE treatment users show a -8.3766% decline in mutual_connection_rate with no equivalent movement in the control arm, which is consistent with a genuine feature effect in that market and may be offsetting gains elsewhere. Instrumentation is healthy across all events, so this is unlikely to be a measurement artefact. Escalating for a human decision on whether to hold the German iOS rollout.",
+  "executive_summary": "Day-30 checkpoint on Priority Recommendations shows no detectable aggregate effect: recommendation_engagement_rate is 0.5662% treatment vs control, below the 1.2% minimum detectable effect. That aggregate is misleading. iOS/DE treatment users show a -8.3766% decline in recommendation_engagement_rate with no equivalent movement in the control arm, which is consistent with a genuine feature effect in that market and may be offsetting gains elsewhere. Instrumentation is healthy across all events, so this is unlikely to be a measurement artefact. Escalating for a human decision on whether to hold the German iOS rollout.",
   "segment_findings": [
     {
       "segment": "iOS/DE",
-      "observation": "mutual_connection_rate in iOS/DE moved -8.3766% over the window, accounting for 38.9% of total absolute movement. The treatment arm moved -16.4961% against -0.3069% in control.",
+      "observation": "recommendation_engagement_rate in iOS/DE moved -8.3766% over the window, accounting for 38.9% of total absolute movement. The treatment arm moved -16.4961% against -0.3069% in control.",
       "arm_symmetry": "treatment_only",
       "evidence_refs": [
-        "EV-SEG-mutual-connection-rate-platform-market-ios-de-d30",
-        "EV-SEG-mutual-connection-rate-platform-market-d30"
+        "EV-SEG-recommendation-engagement-rate-platform-market-ios-de-d30",
+        "EV-SEG-recommendation-engagement-rate-platform-market-d30"
       ],
       "confidence": "medium",
       "limitations": "Single market and platform; no qualitative signal on why German users respond differently. Sub-segment cell sizes below the market level are not examined."
@@ -84,15 +84,15 @@
   ],
   "facts": [
     {
-      "statement": "Aggregate mutual_connection_rate is 0.5662% treatment vs control, below the 1.2% minimum detectable effect.",
+      "statement": "Aggregate recommendation_engagement_rate is 0.5662% treatment vs control, below the 1.2% minimum detectable effect.",
       "evidence_refs": [
-        "EV-MOV-mutual-connection-rate-d30"
+        "EV-MOV-recommendation-engagement-rate-d30"
       ]
     },
     {
-      "statement": "mutual_connection_rate in iOS/DE fell 8.3766% over the window, with the movement confined to the treatment arm.",
+      "statement": "recommendation_engagement_rate in iOS/DE fell 8.3766% over the window, with the movement confined to the treatment arm.",
       "evidence_refs": [
-        "EV-SEG-mutual-connection-rate-platform-market-ios-de-d30"
+        "EV-SEG-recommendation-engagement-rate-platform-market-ios-de-d30"
       ]
     },
     {
@@ -110,22 +110,22 @@
   ],
   "hypotheses": [
     {
-      "statement": "Priority Introductions may suppress mutual connections for German iOS users, possibly through introduction ranking that suits the local liquidity pattern poorly.",
+      "statement": "Priority Recommendations may suppress engaged recommendations for German iOS users, possibly through recommendation ranking that suits the local catalogue depth poorly.",
       "supporting_evidence_refs": [
-        "EV-SEG-mutual-connection-rate-platform-market-ios-de-d30"
+        "EV-SEG-recommendation-engagement-rate-platform-market-ios-de-d30"
       ],
       "contradicting_evidence_refs": [
-        "EV-MOV-mutual-connection-rate-d30"
+        "EV-MOV-recommendation-engagement-rate-d30"
       ],
       "confidence": "medium",
-      "how_to_test": "Compare intro acceptance rate by recipient bucket within iOS/DE treatment against iOS/US treatment; if ranking is the mechanism, acceptance should differ.",
+      "how_to_test": "Compare recommendation engagement rate by recipient bucket within iOS/DE treatment against iOS/US treatment; if ranking is the mechanism, acceptance should differ.",
       "ruled_out": false
     },
     {
       "statement": "The iOS/DE movement could be a market-specific seasonal or competitive effect unrelated to the feature.",
       "supporting_evidence_refs": [],
       "contradicting_evidence_refs": [
-        "EV-SEG-mutual-connection-rate-platform-market-ios-de-d30"
+        "EV-SEG-recommendation-engagement-rate-platform-market-ios-de-d30"
       ],
       "confidence": "low",
       "how_to_test": "An external effect would move the control arm too. Control moved -0.3069%, which argues against this.",
@@ -139,7 +139,7 @@
       "rationale": "A treatment-only decline of this size in one market is worth pausing on, and the aggregate does not justify expanding.",
       "blocks_product_decision": true,
       "evidence_refs": [
-        "EV-SEG-mutual-connection-rate-platform-market-ios-de-d30"
+        "EV-SEG-recommendation-engagement-rate-platform-market-ios-de-d30"
       ]
     },
     {
@@ -148,7 +148,7 @@
       "rationale": "Cheapest test that separates a ranking mechanism from a market effect.",
       "blocks_product_decision": false,
       "evidence_refs": [
-        "EV-SEG-mutual-connection-rate-platform-market-ios-de-d30"
+        "EV-SEG-recommendation-engagement-rate-platform-market-ios-de-d30"
       ]
     }
   ],
@@ -188,17 +188,17 @@
       "summary": "Deterministic tool output cited by this report."
     },
     {
-      "evidence_id": "EV-MOV-mutual-connection-rate-d30",
+      "evidence_id": "EV-MOV-recommendation-engagement-rate-d30",
       "tool": "metric_movement",
       "summary": "Deterministic tool output cited by this report."
     },
     {
-      "evidence_id": "EV-SEG-mutual-connection-rate-platform-market-d30",
+      "evidence_id": "EV-SEG-recommendation-engagement-rate-platform-market-d30",
       "tool": "segment_breakdown",
       "summary": "Deterministic tool output cited by this report."
     },
     {
-      "evidence_id": "EV-SEG-mutual-connection-rate-platform-market-ios-de-d30",
+      "evidence_id": "EV-SEG-recommendation-engagement-rate-platform-market-ios-de-d30",
       "tool": "segment_breakdown",
       "summary": "Deterministic tool output cited by this report."
     }

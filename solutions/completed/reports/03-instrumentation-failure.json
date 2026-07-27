@@ -1,5 +1,5 @@
 {
-  "feature_id": "priority-introductions",
+  "feature_id": "priority-recommendations",
   "checkpoint_days": 30,
   "brief_version": "1.2.0",
   "generated_by": "monitoring-coordinator",
@@ -50,18 +50,18 @@
   "instrumentation_health": {
     "status": "below_floor",
     "events_below_floor": [
-      "priority_intro_sent (Android/US)"
+      "priority_rec_saved (Android/US)"
     ],
     "metrics_not_trustworthy": [
       "feature_adoption_rate"
     ],
     "evidence_refs": [
       "EV-INS-summary-d30",
-      "EV-INS-priority-intro-sent-android-us-d30"
+      "EV-INS-priority-rec-saved-android-us-d30"
     ]
   },
   "primary_outcome": {
-    "metric": "mutual_connection_rate",
+    "metric": "recommendation_engagement_rate",
     "checkpoint_value": 0.184882,
     "treatment_vs_control_relative_pct": 2.184,
     "expected_range_pct": [
@@ -70,18 +70,18 @@
     ],
     "verdict": "within_expected_range",
     "evidence_refs": [
-      "EV-MOV-mutual-connection-rate-d30"
+      "EV-MOV-recommendation-engagement-rate-d30"
     ]
   },
-  "executive_summary": "Day-30 checkpoint on Priority Introductions: the primary outcome is healthy at 2.184% treatment vs control, inside the expected band. Recorded feature adoption on Android/US falls 49.2137% between the first and second half of the window, but this is a measurement problem rather than a change in user behaviour: priority_intro_sent completeness on Android/US is 73.3% against a 95% floor, the event's schema version changed inside the window, and the funnel step after it is unchanged. Recorded adoption for Android/US is not usable evidence about users this period. Escalating for measurement remediation before any adoption figure is reported onward.",
+  "executive_summary": "Day-30 checkpoint on Priority Recommendations: the primary outcome is healthy at 2.184% treatment vs control, inside the expected band. Recorded feature adoption on Android/US falls 49.2137% between the first and second half of the window, but this is a measurement problem rather than a change in user behaviour: priority_rec_saved completeness on Android/US is 73.3% against a 95% floor, the event's schema version changed inside the window, and the funnel step after it is unchanged. Recorded adoption for Android/US is not usable evidence about users this period. Escalating for measurement remediation before any adoption figure is reported onward.",
   "segment_findings": [
     {
       "segment": "Android/US",
-      "observation": "Recorded feature_adoption_rate in Android/US falls 49.2137% half-over-half. intro_sent fell 52.0% while paywall_viewed held at +0.7%. A genuine drop in intro_sent would reduce every step after it. This pattern is consistent with the intro_sent event under-reporting, not with users behaving differently.",
+      "observation": "Recorded feature_adoption_rate in Android/US falls 49.2137% half-over-half. recommendation_saved fell 52.0% while paywall_viewed held at +0.7%. A genuine drop in recommendation_saved would reduce every step after it. This pattern is consistent with the recommendation_saved event under-reporting, not with users behaving differently.",
       "arm_symmetry": "undetermined",
       "evidence_refs": [
         "EV-SEG-feature-adoption-rate-platform-market-android-us-d30",
-        "EV-FUN-intro-sent-platform-android-market-us-d30"
+        "EV-FUN-recommendation-saved-platform-android-market-us-d30"
       ],
       "confidence": "high",
       "limitations": "The true adoption level for Android/US in the affected period is unknown and cannot be recovered from this data. Backfill would be required."
@@ -89,15 +89,15 @@
   ],
   "facts": [
     {
-      "statement": "priority_intro_sent completeness on Android/US averages 73.3% over the window against a 95% contract floor, with the event's schema version changing inside the window.",
+      "statement": "priority_rec_saved completeness on Android/US averages 73.3% over the window against a 95% contract floor, with the event's schema version changing inside the window.",
       "evidence_refs": [
-        "EV-INS-priority-intro-sent-android-us-d30"
+        "EV-INS-priority-rec-saved-android-us-d30"
       ]
     },
     {
-      "statement": "intro_sent fell 52.0% while paywall_viewed held at +0.7%. A genuine drop in intro_sent would reduce every step after it. This pattern is consistent with the intro_sent event under-reporting, not with users behaving differently.",
+      "statement": "recommendation_saved fell 52.0% while paywall_viewed held at +0.7%. A genuine drop in recommendation_saved would reduce every step after it. This pattern is consistent with the recommendation_saved event under-reporting, not with users behaving differently.",
       "evidence_refs": [
-        "EV-FUN-intro-sent-platform-android-market-us-d30"
+        "EV-FUN-recommendation-saved-platform-android-market-us-d30"
       ]
     },
     {
@@ -108,9 +108,9 @@
       ]
     },
     {
-      "statement": "mutual_connection_rate is 2.184% treatment vs control, inside the contract's expected range.",
+      "statement": "recommendation_engagement_rate is 2.184% treatment vs control, inside the contract's expected range.",
       "evidence_refs": [
-        "EV-MOV-mutual-connection-rate-d30"
+        "EV-MOV-recommendation-engagement-rate-d30"
       ]
     },
     {
@@ -122,42 +122,42 @@
   ],
   "hypotheses": [
     {
-      "statement": "The priority_intro_sent event is under-reporting on Android/US, most likely introduced by the rel-1058 analytics SDK upgrade, which shipped to that segment inside the window.",
+      "statement": "The priority_rec_saved event is under-reporting on Android/US, most likely introduced by the rel-1058 analytics SDK upgrade, which shipped to that segment inside the window.",
       "supporting_evidence_refs": [
-        "EV-INS-priority-intro-sent-android-us-d30",
-        "EV-FUN-intro-sent-platform-android-market-us-d30",
+        "EV-INS-priority-rec-saved-android-us-d30",
+        "EV-FUN-recommendation-saved-platform-android-market-us-d30",
         "EV-CTX-release-rel-1058"
       ],
       "contradicting_evidence_refs": [],
       "confidence": "high",
-      "how_to_test": "Compare client event volume against server-side intro records for Android/US in the affected period; a gap confirms client under-reporting.",
+      "how_to_test": "Compare client event volume against server-side recommendation records for Android/US in the affected period; a gap confirms client under-reporting.",
       "ruled_out": false
     },
     {
-      "statement": "Android/US users could genuinely be sending fewer introductions, which would be a real adoption problem.",
+      "statement": "Android/US users could genuinely be saving fewer recommendations, which would be a real adoption problem.",
       "supporting_evidence_refs": [
         "EV-SEG-feature-adoption-rate-platform-market-android-us-d30"
       ],
       "contradicting_evidence_refs": [
-        "EV-FUN-intro-sent-platform-android-market-us-d30"
+        "EV-FUN-recommendation-saved-platform-android-market-us-d30"
       ],
       "confidence": "low",
-      "how_to_test": "A genuine drop would reduce every downstream funnel step. The step after intro_sent is unchanged, which argues strongly against this.",
+      "how_to_test": "A genuine drop would reduce every downstream funnel step. The step after recommendation_saved is unchanged, which argues strongly against this.",
       "ruled_out": true
     }
   ],
   "recommended_actions": [
     {
-      "action": "Treat Android/US adoption figures for this window as unreportable until priority_intro_sent is fixed and backfilled.",
+      "action": "Treat Android/US adoption figures for this window as unreportable until priority_rec_saved is fixed and backfilled.",
       "owner": "lifecycle-analytics",
       "rationale": "Completeness below the contract floor means the metric measures the event, not the users.",
       "blocks_product_decision": true,
       "evidence_refs": [
-        "EV-INS-priority-intro-sent-android-us-d30"
+        "EV-INS-priority-rec-saved-android-us-d30"
       ]
     },
     {
-      "action": "Raise the priority_intro_sent schema change with the Android platform team, referencing rel-1058.",
+      "action": "Raise the priority_rec_saved schema change with the Android platform team, referencing rel-1058.",
       "owner": "product-discovery",
       "rationale": "The degradation begins with a release that shipped to exactly this segment.",
       "blocks_product_decision": false,
@@ -170,7 +170,7 @@
     "overall_confidence": "medium",
     "escalate": true,
     "escalation_reasons": [
-      "priority_intro_sent completeness on Android/US is 73.3%, below the 95% contract floor, so metrics derived from it are not trustworthy.",
+      "priority_rec_saved completeness on Android/US is 73.3%, below the 95% contract floor, so metrics derived from it are not trustworthy.",
       "Adoption reporting for Android/US must not go onward until measurement is repaired."
     ],
     "escalation_route": "#analytics-launch-review (fictional)"
@@ -182,7 +182,7 @@
       "summary": "Deterministic tool output cited by this report."
     },
     {
-      "evidence_id": "EV-FUN-intro-sent-platform-android-market-us-d30",
+      "evidence_id": "EV-FUN-recommendation-saved-platform-android-market-us-d30",
       "tool": "funnel_analysis",
       "summary": "Deterministic tool output cited by this report."
     },
@@ -202,7 +202,7 @@
       "summary": "Deterministic tool output cited by this report."
     },
     {
-      "evidence_id": "EV-INS-priority-intro-sent-android-us-d30",
+      "evidence_id": "EV-INS-priority-rec-saved-android-us-d30",
       "tool": "instrumentation_check",
       "summary": "Deterministic tool output cited by this report."
     },
@@ -212,7 +212,7 @@
       "summary": "Deterministic tool output cited by this report."
     },
     {
-      "evidence_id": "EV-MOV-mutual-connection-rate-d30",
+      "evidence_id": "EV-MOV-recommendation-engagement-rate-d30",
       "tool": "metric_movement",
       "summary": "Deterministic tool output cited by this report."
     },

@@ -1,5 +1,5 @@
 {
-  "feature_id": "priority-introductions",
+  "feature_id": "priority-recommendations",
   "checkpoint_days": 30,
   "brief_version": "1.2.0",
   "generated_by": "monitoring-coordinator",
@@ -62,7 +62,7 @@
     ]
   },
   "primary_outcome": {
-    "metric": "mutual_connection_rate",
+    "metric": "recommendation_engagement_rate",
     "checkpoint_value": 0.184783,
     "treatment_vs_control_relative_pct": 2.2454,
     "expected_range_pct": [
@@ -71,10 +71,10 @@
     ],
     "verdict": "within_expected_range",
     "evidence_refs": [
-      "EV-MOV-mutual-connection-rate-d30"
+      "EV-MOV-recommendation-engagement-rate-d30"
     ]
   },
-  "executive_summary": "Day-30 checkpoint on Priority Introductions. The feature is performing as intended: adoption among eligible treatment users is 35.4% and the primary outcome, mutual_connection_rate, is 2.2454% higher in treatment than control, inside the contract's expected band. Separately, the payment_completion_rate guardrail is breached in Android/GB. That breach is a measurement failure, not a revenue event: the payment_completed event is under-reporting on Android/GB at 76.7% completeness against a 95% floor, server-side subscription activations are unchanged, and observed activations now exceed observed payments, which is not possible. The movement also appears in the control arm, so Priority Introductions cannot be its cause. Escalating on the guardrail breach. No rollback is warranted; the GB conversion figures for this window must not be reported onward until the event is repaired.",
+  "executive_summary": "Day-30 checkpoint on Priority Recommendations. The feature is performing as intended: adoption among eligible treatment users is 35.4% and the primary outcome, recommendation_engagement_rate, is 2.2454% higher in treatment than control, inside the contract's expected band. Separately, the payment_completion_rate guardrail is breached in Android/GB. That breach is a measurement failure, not a revenue event: the payment_completed event is under-reporting on Android/GB at 76.7% completeness against a 95% floor, server-side subscription activations are unchanged, and observed activations now exceed observed payments, which is not possible. The movement also appears in the control arm, so Priority Recommendations cannot be its cause. Escalating on the guardrail breach. No rollback is warranted; the GB conversion figures for this window must not be reported onward until the event is repaired.",
   "segment_findings": [
     {
       "segment": "Android/GB",
@@ -90,9 +90,9 @@
   ],
   "facts": [
     {
-      "statement": "mutual_connection_rate is 2.2454% higher in treatment than control, inside the contract's expected 2.0-4.0% band.",
+      "statement": "recommendation_engagement_rate is 2.2454% higher in treatment than control, inside the contract's expected 2.0-4.0% band.",
       "evidence_refs": [
-        "EV-MOV-mutual-connection-rate-d30"
+        "EV-MOV-recommendation-engagement-rate-d30"
       ]
     },
     {
@@ -159,7 +159,7 @@
       "ruled_out": true
     },
     {
-      "statement": "Priority Introductions could have suppressed conversion for Android/GB users.",
+      "statement": "Priority Recommendations could have suppressed conversion for Android/GB users.",
       "supporting_evidence_refs": [],
       "contradicting_evidence_refs": [
         "EV-SEG-subscription-conversion-rate-platform-market-android-gb-d30"
@@ -246,7 +246,7 @@
       "summary": "Deterministic tool output cited by this report."
     },
     {
-      "evidence_id": "EV-MOV-mutual-connection-rate-d30",
+      "evidence_id": "EV-MOV-recommendation-engagement-rate-d30",
       "tool": "metric_movement",
       "summary": "Deterministic tool output cited by this report."
     },
