@@ -207,8 +207,15 @@ debug live for more than ninety seconds.
 ```bash
 cp solutions/completed/config/escalation_rules.yaml src/schemas/
 cp solutions/completed/config/review_rubric.yaml src/reviewers/
+cp solutions/completed/config/gate_config.yaml automation/
 python3 evaluations/run_evaluations.py --variant solution     # 5/5, mean 1.00
+python3 automation/quality_gate.py                            # all checks pass
 ```
+
+The gate config is the one people forget. By default the gate scores the flawed
+teaching fixtures, so it keeps blocking after the other two fixes — correctly,
+because case 4's baseline really is wrong. That copy points it at the corrected
+reports.
 
 **Reset everything:**
 

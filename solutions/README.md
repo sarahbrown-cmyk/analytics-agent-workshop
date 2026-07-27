@@ -15,7 +15,9 @@ exactly what changed rather than diffing two trees.
 ```bash
 cp solutions/completed/config/escalation_rules.yaml src/schemas/
 cp solutions/completed/config/review_rubric.yaml src/reviewers/
+cp solutions/completed/config/gate_config.yaml automation/
 python3 evaluations/run_evaluations.py --variant solution
+python3 automation/quality_gate.py
 ```
 
 Expect **5/5 cases pass, mean weighted score 1.00**.

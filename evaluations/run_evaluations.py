@@ -211,7 +211,7 @@ def main() -> None:
         print(
             json.dumps(
                 {
-                    "variant": args.variant,
+                    "variant": args.report_dir or args.variant,
                     "cases_total": len(scored),
                     "cases_passing": sum(1 for r in scored if r["passed"]),
                     "mean_weighted_score": round(

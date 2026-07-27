@@ -1,0 +1,54 @@
+# ============================================================================
+# Quality gate configuration
+#
+# The numbers a team argues about, in one reviewable file. Changing what the gate
+# enforces should be a visible decision in a diff, not an edit buried in Python.
+# ============================================================================
+
+version: 1.0.0
+owner: lifecycle-analytics
+
+thresholds:
+  # Percentage of evaluation cases that must pass for a release to proceed.
+  # Set to 100 deliberately. A gate that tolerates one failing case tolerates
+  # whichever case is currently failing, and that is rarely a decision anyone made.
+  min_cases_passing_pct: 100
+
+  # Cost ceiling per checkpoint run. Reported always; blocking only when
+  # enforce_cost_budget is true. Left false here so the workshop's first gate run
+  # is not blocked by a number nobody has agreed yet.
+  max_usd_per_checkpoint: 5.00
+  enforce_cost_budget: false
+
+evaluations:
+  # Which report artifacts the gate scores.
+  #   baseline  the deliberately flawed teaching fixtures shipped with the repo
+  #   solution  the corrected reports in solutions/completed/reports/
+  # Set report_dir to score your own output instead, e.g. "reports".
+  variant: solution
+  report_dir: null
+
+usage:
+  # Runs per month, used to turn a per-run cost into a number a manager recognises.
+  checkpoints_per_month: 12
+
+cost:
+  # Assumptions, not measurements. Correct them from real usage before quoting.
+  coordinator_calls_per_run: 4
+  calls_per_agent_per_run: 2.5
+  input_tokens_per_call: 18000
+  output_tokens_per_call: 2200
+
+  # Check against current published pricing before relying on these.
+  usd_per_million_input_tokens: 3.00
+  usd_per_million_output_tokens: 15.00
+
+# Paths that trigger the gate. Everything that can change the system's analytical
+# behaviour, and nothing that cannot.
+watched_paths:
+  - .claude/agents/
+  - .claude/skills/
+  - src/
+  - evaluations/
+  - feature_briefs/
+  - automation/

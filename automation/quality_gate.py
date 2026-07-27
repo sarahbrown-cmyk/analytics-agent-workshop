@@ -80,12 +80,17 @@ def _paint(text: str, code: str, colour: bool) -> str:
 
 
 def check_evaluations(config: dict) -> dict:
-    result = subprocess.run(
-        [sys.executable, str(REPO_ROOT / "evaluations" / "run_evaluations.py"), "--json"],
-        capture_output=True,
-        text=True,
-        cwd=REPO_ROOT,
-    )
+    # Which reports to score. The default scores the teaching fixtures, two of
+    # which fail on purpose — so the gate blocks in the starting state, which is
+    # the point. Once a team is producing its own reports, point this at them.
+    settings = config.get("evaluations", {}) or {}
+    command = [sys.executable, str(REPO_ROOT / "evaluations" / "run_evaluations.py"), "--json"]
+    if settings.get("report_dir"):
+        command += ["--report-dir", str(settings["report_dir"])]
+    elif settings.get("variant"):
+        command += ["--variant", str(settings["variant"])]
+
+    result = subprocess.run(command, capture_output=True, text=True, cwd=REPO_ROOT)
     try:
         payload = json.loads(result.stdout)
     except json.JSONDecodeError:
@@ -107,6 +112,7 @@ def check_evaluations(config: dict) -> dict:
         "passed": passing_pct >= minimum,
         "detail": (
             f"{payload['cases_passing']}/{payload['cases_total']} cases pass "
+            f"[{payload.get('variant', 'baseline')}] "
             f"(mean score {payload['mean_weighted_score']:.2f}); required {minimum:.0f}%"
             + (f". Failing: {', '.join(failing)}" if failing else "")
         ),

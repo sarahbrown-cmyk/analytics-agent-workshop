@@ -5,9 +5,15 @@
 ```bash
 cp solutions/completed/config/escalation_rules.yaml src/schemas/
 cp solutions/completed/config/review_rubric.yaml src/reviewers/
+cp solutions/completed/config/gate_config.yaml automation/
 python3 evaluations/run_evaluations.py --variant solution
 python3 automation/quality_gate.py
 ```
+
+The third copy matters. The gate scores the deliberately flawed teaching fixtures
+by default, so it blocks even after the config fixes — correctly, because case 4's
+baseline report really is wrong. `gate_config.yaml` here points the gate at the
+corrected reports instead, which is what a team scoring its own output would do.
 
 ## What is here
 
