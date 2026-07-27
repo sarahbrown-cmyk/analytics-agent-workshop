@@ -54,21 +54,17 @@ rules:
       launch contract. The supportable statement is that no change is detectable
       yet, not that there is no change.
 
+  - id: instrumentation_below_floor
+    enabled: true
+    severity: critical
+    reason: >
+      An event the feature depends on is below the contract completeness floor, or
+      has no coverage at all. Metrics derived from it describe the event, not the
+      users, and must not be reported onward as behaviour.
+
   - id: claim_without_evidence
     enabled: true
     severity: critical
     reason: >
       A claim in the report carries no evidence reference, or cites an evidence id
       that no tool produced. Either way it cannot be checked.
-
-# ----------------------------------------------------------------------------
-# NOTE FOR THE WORKSHOP
-#
-# The launch contract at feature_briefs/priority-recommendations.yaml lists six
-# escalation triggers. Count the rules above. One trigger in the contract has no
-# rule here, which is why this system currently reports an instrumentation
-# failure as an ordinary finding and does not escalate it.
-#
-# The evaluation suite will show you which case this breaks. The check is already
-# implemented in report_contract.py — it is simply not switched on.
-# ----------------------------------------------------------------------------

@@ -20,6 +20,14 @@ thresholds:
   max_usd_per_checkpoint: 5.00
   enforce_cost_budget: false
 
+evaluations:
+  # Which report artifacts the gate scores.
+  #   baseline  the deliberately flawed teaching fixtures shipped with the repo
+  #   solution  the corrected reports in solutions/completed/reports/
+  # Set report_dir to score your own output instead, e.g. "reports".
+  variant: solution
+  report_dir: null
+
 usage:
   # Runs per month, used to turn a per-run cost into a number a manager recognises.
   checkpoints_per_month: 12

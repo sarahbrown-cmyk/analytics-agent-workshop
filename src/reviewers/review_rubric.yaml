@@ -17,7 +17,7 @@
 # an evaluation case that would fail without it.
 # ============================================================================
 
-version: 1.0.0
+version: 1.1.0
 owner: lifecycle-analytics
 applies_to: monitoring_report
 
@@ -71,6 +71,31 @@ checks:
       A metric movement is discussed as user behaviour while the event it is
       derived from is known to be under-reporting.
 
+  - id: causal_discipline
+    severity: blocking
+    deterministic: true
+    asks: >
+      Does every causal claim survive the three attribution filters — does the
+      proposed cause reach the affected segment, is the movement confined to the arm
+      that saw the feature, and is the measurement it rests on trustworthy?
+    fail_when: >
+      A movement is attributed to the feature while the report's own evidence records
+      it as symmetric across arms; or a metric derived from an event below the
+      completeness floor is described as user behaviour; or a cause is named that
+      never reached the affected platform and market.
+
+  - id: alternative_explanations_engaged
+    severity: blocking
+    deterministic: true
+    asks: >
+      Is every competing explanation available in the evidence named, and either kept
+      live with a test that would settle it or explicitly ruled out with a reason?
+    fail_when: >
+      An overlapping experiment covering a material share of the affected segment, an
+      in-window release reaching that segment, or a schema change in the same window
+      is present in the evidence and absent from the report. A single explanation with
+      no rejected alternatives has narrated rather than investigated.
+
   - id: uncertainty_calibration
     severity: warning
     deterministic: false
@@ -90,17 +115,3 @@ checks:
     fail_when: >
       The report recommends rolling back, expanding, or repricing a feature on
       evidence that cannot distinguish between competing explanations.
-
-# ----------------------------------------------------------------------------
-# NOTE FOR THE WORKSHOP
-#
-# Read the list above and ask what a determined optimist could still get past it.
-#
-# Nothing here stops the report from asserting that the feature CAUSED a metric to
-# move. Nothing here requires an alternative explanation to be considered and
-# ruled out. A report can therefore pass every check above and still hand a
-# product manager a confident causal story built on a coincidence.
-#
-# Two of the five evaluation cases fail for exactly this reason. Section 8 of the
-# workshop is where you fix it.
-# ----------------------------------------------------------------------------
