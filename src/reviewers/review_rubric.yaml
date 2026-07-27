@@ -1,0 +1,106 @@
+# ============================================================================
+# Analytical review rubric
+#
+# What the reviewer challenges a finished report on. This is the most-edited file
+# in the repository during the workshop, and deliberately the most readable: you
+# should be able to improve the review standard of the whole system by editing
+# YAML, without writing Python.
+#
+# Each check has:
+#   id           stable identifier, referenced by evaluation scorers
+#   severity     blocking | warning  (blocking failures fail the quality gate)
+#   asks         the question the reviewer must answer about the report
+#   fail_when    what a failure looks like, concretely
+#   deterministic  true if a Python check enforces it as well as the reviewer
+#
+# A rubric item that cannot fail anything is decoration. If you add a check, add
+# an evaluation case that would fail without it.
+# ============================================================================
+
+version: 1.0.0
+owner: lifecycle-analytics
+applies_to: monitoring_report
+
+checks:
+  - id: metric_definitions_correct
+    severity: blocking
+    deterministic: true
+    asks: >
+      Does every metric named in the report have a governed definition, and is it
+      described consistently with that definition?
+    fail_when: >
+      A metric is reported with no definition in metric_definitions.py, or a mean
+      is described as a percentage, or a proxy is reported as the thing it proxies.
+
+  - id: required_segments_covered
+    severity: blocking
+    deterministic: true
+    asks: >
+      Was every segment required by the launch contract actually examined, and is
+      it visible in the report which segments were checked and found unremarkable?
+    fail_when: >
+      The report only lists segments where something was found, so a reader cannot
+      distinguish "we looked and it was fine" from "we did not look".
+
+  - id: evidence_completeness
+    severity: blocking
+    deterministic: true
+    asks: >
+      Does every fact carry at least one evidence reference that a tool actually
+      produced?
+    fail_when: >
+      A fact has no evidence_refs, or cites an evidence id absent from the
+      evidence index.
+
+  - id: numerical_consistency
+    severity: blocking
+    deterministic: true
+    asks: >
+      Do the numbers in the narrative match the numbers in the cited evidence?
+    fail_when: >
+      A percentage in the executive summary disagrees with the tool output it
+      cites, or a number appears in prose that no tool produced.
+
+  - id: instrumentation_awareness
+    severity: blocking
+    deterministic: true
+    asks: >
+      Where a metric is derived from an event whose completeness is below the
+      contract floor, does the report say so before interpreting that metric?
+    fail_when: >
+      A metric movement is discussed as user behaviour while the event it is
+      derived from is known to be under-reporting.
+
+  - id: uncertainty_calibration
+    severity: warning
+    deterministic: false
+    asks: >
+      Is the stated confidence supported by the evidence, and does it drop when the
+      evidence is thin?
+    fail_when: >
+      High confidence is claimed on a single segment with a small denominator, or
+      every hypothesis carries the same confidence regardless of support.
+
+  - id: recommendation_proportionality
+    severity: warning
+    deterministic: false
+    asks: >
+      Do the recommended actions stay within what the evidence supports, and is
+      anything that would materially affect a product decision flagged for a human?
+    fail_when: >
+      The report recommends rolling back, expanding, or repricing a feature on
+      evidence that cannot distinguish between competing explanations.
+
+# ----------------------------------------------------------------------------
+# NOTE FOR THE WORKSHOP
+#
+# Read the list above and ask what a determined optimist could still get past it.
+#
+# Nothing here stops the report from asserting that the feature CAUSED a metric to
+# move. Nothing here requires an alternative explanation to be considered and
+# ruled out. A report can therefore pass every check above and still hand a
+# product manager a confident causal story built on a coincidence.
+#
+# Two of the five evaluation cases fail for exactly this reason. Section 8 of the
+# workshop is where you fix it.
+# ----------------------------------------------------------------------------

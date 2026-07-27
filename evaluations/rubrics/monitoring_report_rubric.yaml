@@ -1,0 +1,104 @@
+# ============================================================================
+# Evaluation rubric
+#
+# What a monitoring report is scored on. Note what is absent: nothing here
+# compares the report's prose to a reference paragraph. Two analysts writing up
+# the same investigation honestly will produce different sentences, and scoring
+# the sentences rewards mimicry over rigour.
+#
+# What is scored instead is process and support: did it use the right metric, get
+# the arithmetic right, look everywhere it was required to look, notice when
+# measurement was compromised, attach evidence to its claims, stay inside what the
+# evidence supports, calibrate its confidence, escalate when the rules say so, and
+# recommend actions proportionate to what it actually established.
+#
+# blocking: true  — a failure here fails the case, and fails the quality gate
+# blocking: false — a failure is reported and lowers the score, but does not block
+# ============================================================================
+
+version: 1.0.0
+owner: lifecycle-analytics
+applies_to: monitoring_report
+
+dimensions:
+  - id: metric_correctness
+    weight: 1.0
+    blocking: true
+    asks: >
+      Is the primary outcome the metric the launch contract names, and does every
+      reported metric have a governed definition?
+
+  - id: numerical_correctness
+    weight: 1.0
+    blocking: true
+    asks: >
+      Do the figures in the report match the tool output they cite?
+
+  - id: required_segmentation
+    weight: 1.0
+    blocking: true
+    asks: >
+      Does the report account for every segment the contract requires, including
+      the ones where nothing was found?
+
+  - id: investigation_coverage
+    weight: 1.5
+    blocking: true
+    asks: >
+      Did the report locate the segment where the movement is actually
+      concentrated, rather than stopping at the aggregate?
+
+  - id: instrumentation_awareness
+    weight: 1.5
+    blocking: true
+    asks: >
+      Where a metric is derived from a compromised event, does the report say so
+      instead of presenting the movement as user behaviour?
+
+  - id: evidence_completeness
+    weight: 1.0
+    blocking: true
+    asks: >
+      Does every fact carry at least one evidence reference that a tool actually
+      produced, and is every citation indexed?
+
+  - id: causal_discipline
+    weight: 2.0
+    blocking: true
+    asks: >
+      Does the report avoid attributing movements to the feature where the evidence
+      cannot support attribution — in particular where the movement is symmetric
+      across arms or the measurement is compromised?
+
+  - id: escalation_behaviour
+    weight: 2.0
+    blocking: true
+    asks: >
+      Does the report escalate exactly when the enabled escalation rules say it
+      must — neither hiding a problem nor crying wolf?
+
+  - id: uncertainty_calibration
+    weight: 1.0
+    blocking: false
+    asks: >
+      Does stated confidence fall when the window is incomplete, the sample below
+      the minimum detectable effect, or the measurement degraded?
+
+  - id: alternative_explanations
+    weight: 1.0
+    blocking: false
+    asks: >
+      Are the competing explanations available in the evidence — overlapping
+      experiments, in-window releases, schema changes — named and engaged with?
+
+  - id: recommendation_quality
+    weight: 1.0
+    blocking: false
+    asks: >
+      Are the recommended actions proportionate to the evidence, with anything that
+      would materially affect a product decision flagged for a human?
+
+# A case passes when every blocking dimension passes. The weighted score is for
+# tracking movement between runs — treat a rising score with a blocking failure
+# still present as a regression, not progress.
+pass_rule: all_blocking_dimensions_pass

@@ -1,0 +1,30 @@
+# Case 5 — Insufficient evidence
+#
+# Twelve days of a thirty-day window, a ten-day pre-period, cell sizes roughly a
+# hundredth of normal, one required market missing from the metrics store
+# entirely, and no instrumentation coverage for Android at all.
+#
+# Every number in this case moves. None of the movement means anything. The
+# correct behaviour is to escalate and decline to conclude — which is the hardest
+# thing to get an eager system to do, because the data looks superficially rich.
+id: 05-insufficient-evidence
+name: Insufficient evidence
+scenario: insufficient_evidence
+data_dir: evaluations/cases/05-insufficient-evidence/data
+checkpoint: 30
+
+expect:
+  primary_outcome_verdict: [not_measurable, no_detectable_change]
+  must_escalate: true
+  escalation_must_include: [required_segment_missing, window_incomplete]
+  must_identify_segments: []
+  must_flag_instrumentation: true
+  instrumentation_status: [unverified, below_floor, degraded]
+  metrics_must_be_marked_untrustworthy: [feature_adoption_rate, payment_completion_rate, subscription_conversion_rate]
+  must_not_attribute_to_feature: []
+  must_name_context: []
+  max_overall_confidence: low
+  forbidden_phrases:
+    - "confirms"
+    - "we can conclude"
+    - "the feature is performing"

@@ -1,0 +1,269 @@
+{
+  "feature_id": "priority-introductions",
+  "checkpoint_days": 30,
+  "brief_version": "1.2.0",
+  "generated_by": "monitoring-coordinator",
+  "window": {
+    "post_start": "2026-05-04",
+    "post_end": "2026-06-02",
+    "pre_start": "2026-04-04",
+    "pre_end": "2026-05-03",
+    "complete": true
+  },
+  "segments_checked": [
+    "platform",
+    "market",
+    "platform x market",
+    "user_type",
+    "assignment",
+    "subscription_status"
+  ],
+  "guardrail_status": {
+    "overall": "breach",
+    "items": [
+      {
+        "metric": "report_block_rate",
+        "status": "warn",
+        "worst_segment": "iOS/US",
+        "evidence_refs": [
+          "EV-GRD-report-block-rate-d30"
+        ]
+      },
+      {
+        "metric": "day7_retention_proxy",
+        "status": "pass",
+        "worst_segment": "Android/CA",
+        "evidence_refs": [
+          "EV-GRD-day7-retention-proxy-d30"
+        ]
+      },
+      {
+        "metric": "payment_completion_rate",
+        "status": "breach",
+        "worst_segment": "Android/GB",
+        "evidence_refs": [
+          "EV-GRD-payment-completion-rate-d30"
+        ]
+      }
+    ]
+  },
+  "instrumentation_health": {
+    "status": "below_floor",
+    "events_below_floor": [
+      "payment_completed (Android/GB)"
+    ],
+    "metrics_not_trustworthy": [
+      "payment_completion_rate",
+      "subscription_conversion_rate"
+    ],
+    "evidence_refs": [
+      "EV-INS-summary-d30",
+      "EV-INS-payment-completed-android-gb-d30"
+    ]
+  },
+  "primary_outcome": {
+    "metric": "mutual_connection_rate",
+    "checkpoint_value": 0.184783,
+    "treatment_vs_control_relative_pct": 2.2454,
+    "expected_range_pct": [
+      2.0,
+      4.0
+    ],
+    "verdict": "within_expected_range",
+    "evidence_refs": [
+      "EV-MOV-mutual-connection-rate-d30"
+    ]
+  },
+  "executive_summary": "Day-30 checkpoint on Priority Introductions. The feature is performing as intended: adoption among eligible treatment users is 35.4% and the primary outcome, mutual_connection_rate, is 2.2454% higher in treatment than control, inside the contract's expected band. Separately, the payment_completion_rate guardrail is breached in Android/GB. That breach is a measurement failure, not a revenue event: the payment_completed event is under-reporting on Android/GB at 76.7% completeness against a 95% floor, server-side subscription activations are unchanged, and observed activations now exceed observed payments, which is not possible. The movement also appears in the control arm, so Priority Introductions cannot be its cause. Escalating on the guardrail breach. No rollback is warranted; the GB conversion figures for this window must not be reported onward until the event is repaired.",
+  "segment_findings": [
+    {
+      "segment": "Android/GB",
+      "observation": "Recorded subscription_conversion_rate in Android/GB fell 14.5287% over the window and 29.8355% half-over-half, accounting for 64.58% of total absolute movement. Treatment moved -14.7521% and control -14.3037%. The movement is present in the control arm at a comparable magnitude. A feature shipped only to treatment cannot cause this. Look for a release, a payment processor, or a measurement change affecting both arms.",
+      "arm_symmetry": "symmetric_across_arms",
+      "evidence_refs": [
+        "EV-SEG-subscription-conversion-rate-platform-market-android-gb-d30",
+        "EV-SEG-subscription-conversion-rate-platform-market-d30"
+      ],
+      "confidence": "high",
+      "limitations": "True conversion for Android/GB during the affected period is unknown from this data. Reconciliation against processor records would be needed to quantify any real revenue impact."
+    }
+  ],
+  "facts": [
+    {
+      "statement": "mutual_connection_rate is 2.2454% higher in treatment than control, inside the contract's expected 2.0-4.0% band.",
+      "evidence_refs": [
+        "EV-MOV-mutual-connection-rate-d30"
+      ]
+    },
+    {
+      "statement": "Aggregate subscription_conversion_rate moved -1.217% pre/post, which is why the Android/GB movement is invisible without segmentation.",
+      "evidence_refs": [
+        "EV-MOV-subscription-conversion-rate-d30"
+      ]
+    },
+    {
+      "statement": "Recorded subscription_conversion_rate in Android/GB fell 14.5287% over the window, present in both arms at -14.7521% treatment and -14.3037% control.",
+      "evidence_refs": [
+        "EV-SEG-subscription-conversion-rate-platform-market-android-gb-d30"
+      ]
+    },
+    {
+      "statement": "payment_completed completeness on Android/GB averages 76.7% against a 95% contract floor, with schema version changing from 4 to 5 inside the window and the null rate on a required property reaching 25.8%.",
+      "evidence_refs": [
+        "EV-INS-payment-completed-android-gb-d30"
+      ]
+    },
+    {
+      "statement": "payment_completed fell 40.0% while subscription_activated held at -0.2%. A genuine drop in payment_completed would reduce every step after it. This pattern is consistent with the payment_completed event under-reporting, not with users behaving differently. Observed subscription_activated volume now EXCEEDS payment_completed volume, which is not physically possible and confirms under-reporting.",
+      "evidence_refs": [
+        "EV-FUN-payment-completed-platform-android-market-gb-d30"
+      ]
+    },
+    {
+      "statement": "Release rel-1062 shipped Android 9.42.0 to GB only on 2026-05-18 as a staged rollout, including a billing client upgrade, and reaches the affected segment.",
+      "evidence_refs": [
+        "EV-CTX-release-rel-1062"
+      ]
+    },
+    {
+      "statement": "The payment_completion_rate guardrail is breached in Android/GB while passing in aggregate at -2.4385%.",
+      "evidence_refs": [
+        "EV-GRD-payment-completion-rate-d30"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "statement": "The billing client upgrade in rel-1062 may have broken payment_completed reporting on Android/GB, making conversion and payment completion appear to fall while purchasing continued normally.",
+      "supporting_evidence_refs": [
+        "EV-INS-payment-completed-android-gb-d30",
+        "EV-FUN-payment-completed-platform-android-market-gb-d30",
+        "EV-SEG-subscription-conversion-rate-platform-market-android-gb-d30",
+        "EV-CTX-release-rel-1062"
+      ],
+      "contradicting_evidence_refs": [],
+      "confidence": "high",
+      "how_to_test": "Reconcile client payment_completed events against payment processor records for Android/GB from 2026-05-18. A gap confirms client-side under-reporting and quantifies the real impact.",
+      "ruled_out": false
+    },
+    {
+      "statement": "Android/GB users could genuinely have stopped completing payments, which would be a real revenue problem.",
+      "supporting_evidence_refs": [
+        "EV-SEG-subscription-conversion-rate-platform-market-android-gb-d30"
+      ],
+      "contradicting_evidence_refs": [
+        "EV-FUN-payment-completed-platform-android-market-gb-d30"
+      ],
+      "confidence": "low",
+      "how_to_test": "A genuine drop would reduce subscription_activated, which is recorded server-side. It did not move, and observed activations now exceed observed payments. This is ruled out.",
+      "ruled_out": true
+    },
+    {
+      "statement": "Priority Introductions could have suppressed conversion for Android/GB users.",
+      "supporting_evidence_refs": [],
+      "contradicting_evidence_refs": [
+        "EV-SEG-subscription-conversion-rate-platform-market-android-gb-d30"
+      ],
+      "confidence": "low",
+      "how_to_test": "A treatment-only feature cannot move the control arm. Control fell -14.3037%, essentially the same as treatment. This is ruled out.",
+      "ruled_out": true
+    }
+  ],
+  "recommended_actions": [
+    {
+      "action": "Do not report Android/GB conversion or payment completion figures for this window onward, and do not treat the guardrail breach as a revenue event.",
+      "owner": "lifecycle-analytics",
+      "rationale": "The metrics are derived from an event at 76.7% completeness. They describe the event, not the users.",
+      "blocks_product_decision": true,
+      "evidence_refs": [
+        "EV-INS-payment-completed-android-gb-d30",
+        "EV-FUN-payment-completed-platform-android-market-gb-d30"
+      ]
+    },
+    {
+      "action": "Raise rel-1062's billing client upgrade with the Android platform team and hold the staged rollout to remaining markets.",
+      "owner": "product-discovery",
+      "rationale": "The degradation begins on the day a payment-touching build shipped to GB alone. Shipping it further would extend the measurement gap.",
+      "blocks_product_decision": true,
+      "evidence_refs": [
+        "EV-CTX-release-rel-1062"
+      ]
+    },
+    {
+      "action": "Reconcile client payment events against processor records for Android/GB from 2026-05-18 to quantify any real impact.",
+      "owner": "monetization-analytics",
+      "rationale": "The only test that separates a reporting gap from lost revenue.",
+      "blocks_product_decision": false,
+      "evidence_refs": [
+        "EV-INS-payment-completed-android-gb-d30"
+      ]
+    }
+  ],
+  "confidence_and_escalation": {
+    "overall_confidence": "medium",
+    "escalate": true,
+    "escalation_reasons": [
+      "payment_completion_rate guardrail breached in Android/GB (breach).",
+      "payment_completed completeness on Android/GB is 76.7%, below the 95% contract floor, so subscription_conversion_rate and payment_completion_rate are not trustworthy in that cell.",
+      "A decision on the remaining staged rollout of rel-1062 is required."
+    ],
+    "escalation_route": "#analytics-launch-review (fictional)"
+  },
+  "evidence_index": [
+    {
+      "evidence_id": "EV-CTX-release-rel-1062",
+      "tool": "launch_context",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-FUN-payment-completed-platform-android-market-gb-d30",
+      "tool": "funnel_analysis",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-GRD-day7-retention-proxy-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-GRD-payment-completion-rate-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-GRD-report-block-rate-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-INS-payment-completed-android-gb-d30",
+      "tool": "instrumentation_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-INS-summary-d30",
+      "tool": "instrumentation_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-MOV-mutual-connection-rate-d30",
+      "tool": "metric_movement",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-MOV-subscription-conversion-rate-d30",
+      "tool": "metric_movement",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-SEG-subscription-conversion-rate-platform-market-android-gb-d30",
+      "tool": "segment_breakdown",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-SEG-subscription-conversion-rate-platform-market-d30",
+      "tool": "segment_breakdown",
+      "summary": "Deterministic tool output cited by this report."
+    }
+  ]
+}

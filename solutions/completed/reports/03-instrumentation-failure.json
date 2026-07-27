@@ -1,0 +1,230 @@
+{
+  "feature_id": "priority-introductions",
+  "checkpoint_days": 30,
+  "brief_version": "1.2.0",
+  "generated_by": "monitoring-coordinator",
+  "window": {
+    "post_start": "2026-05-04",
+    "post_end": "2026-06-02",
+    "pre_start": "2026-04-04",
+    "pre_end": "2026-05-03",
+    "complete": true
+  },
+  "segments_checked": [
+    "platform",
+    "market",
+    "platform x market",
+    "user_type",
+    "assignment",
+    "subscription_status"
+  ],
+  "guardrail_status": {
+    "overall": "warn",
+    "items": [
+      {
+        "metric": "report_block_rate",
+        "status": "warn",
+        "worst_segment": "Android/CA",
+        "evidence_refs": [
+          "EV-GRD-report-block-rate-d30"
+        ]
+      },
+      {
+        "metric": "day7_retention_proxy",
+        "status": "pass",
+        "worst_segment": "iOS/GB",
+        "evidence_refs": [
+          "EV-GRD-day7-retention-proxy-d30"
+        ]
+      },
+      {
+        "metric": "payment_completion_rate",
+        "status": "pass",
+        "worst_segment": "iOS/DE",
+        "evidence_refs": [
+          "EV-GRD-payment-completion-rate-d30"
+        ]
+      }
+    ]
+  },
+  "instrumentation_health": {
+    "status": "below_floor",
+    "events_below_floor": [
+      "priority_intro_sent (Android/US)"
+    ],
+    "metrics_not_trustworthy": [
+      "feature_adoption_rate"
+    ],
+    "evidence_refs": [
+      "EV-INS-summary-d30",
+      "EV-INS-priority-intro-sent-android-us-d30"
+    ]
+  },
+  "primary_outcome": {
+    "metric": "mutual_connection_rate",
+    "checkpoint_value": 0.184882,
+    "treatment_vs_control_relative_pct": 2.184,
+    "expected_range_pct": [
+      2.0,
+      4.0
+    ],
+    "verdict": "within_expected_range",
+    "evidence_refs": [
+      "EV-MOV-mutual-connection-rate-d30"
+    ]
+  },
+  "executive_summary": "Day-30 checkpoint on Priority Introductions: the primary outcome is healthy at 2.184% treatment vs control, inside the expected band. Recorded feature adoption on Android/US falls 49.2137% between the first and second half of the window, but this is a measurement problem rather than a change in user behaviour: priority_intro_sent completeness on Android/US is 73.3% against a 95% floor, the event's schema version changed inside the window, and the funnel step after it is unchanged. Recorded adoption for Android/US is not usable evidence about users this period. Escalating for measurement remediation before any adoption figure is reported onward.",
+  "segment_findings": [
+    {
+      "segment": "Android/US",
+      "observation": "Recorded feature_adoption_rate in Android/US falls 49.2137% half-over-half. intro_sent fell 52.0% while paywall_viewed held at +0.7%. A genuine drop in intro_sent would reduce every step after it. This pattern is consistent with the intro_sent event under-reporting, not with users behaving differently.",
+      "arm_symmetry": "undetermined",
+      "evidence_refs": [
+        "EV-SEG-feature-adoption-rate-platform-market-android-us-d30",
+        "EV-FUN-intro-sent-platform-android-market-us-d30"
+      ],
+      "confidence": "high",
+      "limitations": "The true adoption level for Android/US in the affected period is unknown and cannot be recovered from this data. Backfill would be required."
+    }
+  ],
+  "facts": [
+    {
+      "statement": "priority_intro_sent completeness on Android/US averages 73.3% over the window against a 95% contract floor, with the event's schema version changing inside the window.",
+      "evidence_refs": [
+        "EV-INS-priority-intro-sent-android-us-d30"
+      ]
+    },
+    {
+      "statement": "intro_sent fell 52.0% while paywall_viewed held at +0.7%. A genuine drop in intro_sent would reduce every step after it. This pattern is consistent with the intro_sent event under-reporting, not with users behaving differently.",
+      "evidence_refs": [
+        "EV-FUN-intro-sent-platform-android-market-us-d30"
+      ]
+    },
+    {
+      "statement": "Recorded feature_adoption_rate in Android/US is -49.2137% in the second half of the window relative to the first.",
+      "evidence_refs": [
+        "EV-SEG-feature-adoption-rate-platform-market-android-us-d30",
+        "EV-SEG-feature-adoption-rate-platform-market-d30"
+      ]
+    },
+    {
+      "statement": "mutual_connection_rate is 2.184% treatment vs control, inside the contract's expected range.",
+      "evidence_refs": [
+        "EV-MOV-mutual-connection-rate-d30"
+      ]
+    },
+    {
+      "statement": "Release rel-1058 shipped an analytics SDK upgrade and event batching change to Android/US inside the checkpoint window.",
+      "evidence_refs": [
+        "EV-CTX-release-rel-1058"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "statement": "The priority_intro_sent event is under-reporting on Android/US, most likely introduced by the rel-1058 analytics SDK upgrade, which shipped to that segment inside the window.",
+      "supporting_evidence_refs": [
+        "EV-INS-priority-intro-sent-android-us-d30",
+        "EV-FUN-intro-sent-platform-android-market-us-d30",
+        "EV-CTX-release-rel-1058"
+      ],
+      "contradicting_evidence_refs": [],
+      "confidence": "high",
+      "how_to_test": "Compare client event volume against server-side intro records for Android/US in the affected period; a gap confirms client under-reporting.",
+      "ruled_out": false
+    },
+    {
+      "statement": "Android/US users could genuinely be sending fewer introductions, which would be a real adoption problem.",
+      "supporting_evidence_refs": [
+        "EV-SEG-feature-adoption-rate-platform-market-android-us-d30"
+      ],
+      "contradicting_evidence_refs": [
+        "EV-FUN-intro-sent-platform-android-market-us-d30"
+      ],
+      "confidence": "low",
+      "how_to_test": "A genuine drop would reduce every downstream funnel step. The step after intro_sent is unchanged, which argues strongly against this.",
+      "ruled_out": true
+    }
+  ],
+  "recommended_actions": [
+    {
+      "action": "Treat Android/US adoption figures for this window as unreportable until priority_intro_sent is fixed and backfilled.",
+      "owner": "lifecycle-analytics",
+      "rationale": "Completeness below the contract floor means the metric measures the event, not the users.",
+      "blocks_product_decision": true,
+      "evidence_refs": [
+        "EV-INS-priority-intro-sent-android-us-d30"
+      ]
+    },
+    {
+      "action": "Raise the priority_intro_sent schema change with the Android platform team, referencing rel-1058.",
+      "owner": "product-discovery",
+      "rationale": "The degradation begins with a release that shipped to exactly this segment.",
+      "blocks_product_decision": false,
+      "evidence_refs": [
+        "EV-CTX-release-rel-1058"
+      ]
+    }
+  ],
+  "confidence_and_escalation": {
+    "overall_confidence": "medium",
+    "escalate": true,
+    "escalation_reasons": [
+      "priority_intro_sent completeness on Android/US is 73.3%, below the 95% contract floor, so metrics derived from it are not trustworthy.",
+      "Adoption reporting for Android/US must not go onward until measurement is repaired."
+    ],
+    "escalation_route": "#analytics-launch-review (fictional)"
+  },
+  "evidence_index": [
+    {
+      "evidence_id": "EV-CTX-release-rel-1058",
+      "tool": "launch_context",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-FUN-intro-sent-platform-android-market-us-d30",
+      "tool": "funnel_analysis",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-GRD-day7-retention-proxy-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-GRD-payment-completion-rate-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-GRD-report-block-rate-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-INS-priority-intro-sent-android-us-d30",
+      "tool": "instrumentation_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-INS-summary-d30",
+      "tool": "instrumentation_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-MOV-mutual-connection-rate-d30",
+      "tool": "metric_movement",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-SEG-feature-adoption-rate-platform-market-android-us-d30",
+      "tool": "segment_breakdown",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-SEG-feature-adoption-rate-platform-market-d30",
+      "tool": "segment_breakdown",
+      "summary": "Deterministic tool output cited by this report."
+    }
+  ]
+}

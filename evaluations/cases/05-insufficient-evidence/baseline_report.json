@@ -1,0 +1,160 @@
+{
+  "feature_id": "priority-introductions",
+  "checkpoint_days": 30,
+  "brief_version": "1.2.0",
+  "generated_by": "monitoring-coordinator",
+  "window": {
+    "post_start": "2026-05-04",
+    "post_end": "2026-06-02",
+    "pre_start": "2026-04-04",
+    "pre_end": "2026-05-03",
+    "complete": false
+  },
+  "segments_checked": [
+    "platform",
+    "market",
+    "platform x market",
+    "user_type",
+    "assignment",
+    "subscription_status"
+  ],
+  "guardrail_status": {
+    "overall": "warn",
+    "items": [
+      {
+        "metric": "report_block_rate",
+        "status": "warn",
+        "worst_segment": "iOS/GB",
+        "evidence_refs": [
+          "EV-GRD-report-block-rate-d30"
+        ]
+      },
+      {
+        "metric": "day7_retention_proxy",
+        "status": "warn",
+        "worst_segment": "iOS/GB",
+        "evidence_refs": [
+          "EV-GRD-day7-retention-proxy-d30"
+        ]
+      },
+      {
+        "metric": "payment_completion_rate",
+        "status": "warn",
+        "worst_segment": "Android/US",
+        "evidence_refs": [
+          "EV-GRD-payment-completion-rate-d30"
+        ]
+      }
+    ]
+  },
+  "instrumentation_health": {
+    "status": "unverified",
+    "events_below_floor": [],
+    "metrics_not_trustworthy": [
+      "feature_adoption_rate",
+      "payment_completion_rate",
+      "subscription_conversion_rate"
+    ],
+    "evidence_refs": [
+      "EV-INS-summary-d30"
+    ]
+  },
+  "primary_outcome": {
+    "metric": "mutual_connection_rate",
+    "checkpoint_value": 0.186516,
+    "treatment_vs_control_relative_pct": 8.3596,
+    "expected_range_pct": [
+      2.0,
+      4.0
+    ],
+    "verdict": "not_measurable",
+    "evidence_refs": [
+      "EV-MOV-mutual-connection-rate-d30"
+    ]
+  },
+  "executive_summary": "Day-30 checkpoint on Priority Introductions cannot be completed. Only 12 of 30 checkpoint days and 10 of 30 pre-period days are present, so pre/post comparisons are not like-for-like. market=DE is required by the launch contract and absent from the metrics store entirely. There is no instrumentation coverage for Android, so measurement integrity is unverified for half the target platforms. Cell sizes are roughly two orders of magnitude below normal and every observed movement is inside sampling noise at this scale. No conclusion about the feature is supportable from this data. Escalating rather than reporting a result.",
+  "segment_findings": [],
+  "facts": [
+    {
+      "statement": "The checkpoint window covers 12 of 30 days and the pre-period 10 of 30, so the two periods are not comparable.",
+      "evidence_refs": [
+        "EV-MOV-mutual-connection-rate-d30"
+      ]
+    },
+    {
+      "statement": "market=DE is required by the launch contract and has no rows in the metrics store. This is missing data, not a zero.",
+      "evidence_refs": [
+        "EV-SEG-mutual-connection-rate-platform-market-d30"
+      ]
+    },
+    {
+      "statement": "There are no instrumentation records for Android in this window, so event completeness for that platform is unverified rather than healthy.",
+      "evidence_refs": [
+        "EV-INS-summary-d30"
+      ]
+    }
+  ],
+  "hypotheses": [],
+  "recommended_actions": [
+    {
+      "action": "Rerun this checkpoint once 30 full days, the DE market, and Android instrumentation coverage are present in the store.",
+      "owner": "lifecycle-analytics",
+      "rationale": "The inputs required by the launch contract are not available, so no reportable result exists yet.",
+      "blocks_product_decision": true,
+      "evidence_refs": [
+        "EV-MOV-mutual-connection-rate-d30"
+      ]
+    },
+    {
+      "action": "Confirm with the data platform owner why DE and Android instrumentation are absent.",
+      "owner": "analytics-manager",
+      "rationale": "A gap of this shape usually indicates a pipeline problem, not a genuine absence of users.",
+      "blocks_product_decision": false,
+      "evidence_refs": [
+        "EV-MOV-mutual-connection-rate-d30"
+      ]
+    }
+  ],
+  "confidence_and_escalation": {
+    "overall_confidence": "low",
+    "escalate": true,
+    "escalation_reasons": [
+      "Checkpoint window incomplete: 12 of 30 days.",
+      "Required segment absent from the metrics store: market=DE.",
+      "No instrumentation coverage for Android; measurement integrity unverified."
+    ],
+    "escalation_route": "#analytics-launch-review (fictional)"
+  },
+  "evidence_index": [
+    {
+      "evidence_id": "EV-GRD-day7-retention-proxy-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-GRD-payment-completion-rate-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-GRD-report-block-rate-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-INS-summary-d30",
+      "tool": "instrumentation_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-MOV-mutual-connection-rate-d30",
+      "tool": "metric_movement",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-SEG-mutual-connection-rate-platform-market-d30",
+      "tool": "segment_breakdown",
+      "summary": "Deterministic tool output cited by this report."
+    }
+  ]
+}

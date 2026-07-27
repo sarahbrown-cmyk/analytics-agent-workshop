@@ -1,0 +1,143 @@
+{
+  "feature_id": "priority-introductions",
+  "checkpoint_days": 30,
+  "brief_version": "1.2.0",
+  "generated_by": "monitoring-coordinator",
+  "window": {
+    "post_start": "2026-05-04",
+    "post_end": "2026-06-02",
+    "pre_start": "2026-04-04",
+    "pre_end": "2026-05-03",
+    "complete": true
+  },
+  "segments_checked": [
+    "platform",
+    "market",
+    "platform x market",
+    "user_type",
+    "assignment",
+    "subscription_status"
+  ],
+  "guardrail_status": {
+    "overall": "warn",
+    "items": [
+      {
+        "metric": "report_block_rate",
+        "status": "warn",
+        "worst_segment": "iOS/CA",
+        "evidence_refs": [
+          "EV-GRD-report-block-rate-d30"
+        ]
+      },
+      {
+        "metric": "day7_retention_proxy",
+        "status": "pass",
+        "worst_segment": "iOS/DE",
+        "evidence_refs": [
+          "EV-GRD-day7-retention-proxy-d30"
+        ]
+      },
+      {
+        "metric": "payment_completion_rate",
+        "status": "pass",
+        "worst_segment": "iOS/GB",
+        "evidence_refs": [
+          "EV-GRD-payment-completion-rate-d30"
+        ]
+      }
+    ]
+  },
+  "instrumentation_health": {
+    "status": "healthy",
+    "events_below_floor": [],
+    "metrics_not_trustworthy": [],
+    "evidence_refs": [
+      "EV-INS-summary-d30"
+    ]
+  },
+  "primary_outcome": {
+    "metric": "mutual_connection_rate",
+    "checkpoint_value": 0.185116,
+    "treatment_vs_control_relative_pct": 2.141,
+    "expected_range_pct": [
+      2.0,
+      4.0
+    ],
+    "verdict": "within_expected_range",
+    "evidence_refs": [
+      "EV-MOV-mutual-connection-rate-d30"
+    ]
+  },
+  "executive_summary": "Day-30 checkpoint on Priority Introductions is within contract expectations. The primary outcome, mutual_connection_rate, is 2.141% higher in treatment than control, inside the expected 2.0-4.0% band. All three guardrails are within threshold at aggregate and segment level, instrumentation completeness is above the 95% floor for every critical event, and no required segment is missing. No escalation is required and no further investigation is warranted before the day-60 checkpoint.",
+  "segment_findings": [],
+  "facts": [
+    {
+      "statement": "mutual_connection_rate is 2.141% higher in treatment than control over the checkpoint window, against a minimum detectable effect of 1.2%.",
+      "evidence_refs": [
+        "EV-MOV-mutual-connection-rate-d30"
+      ]
+    },
+    {
+      "statement": "Feature adoption among eligible treatment users is 35.4% over the window.",
+      "evidence_refs": [
+        "EV-MOV-feature-adoption-rate-d30"
+      ]
+    },
+    {
+      "statement": "All critical events are above the 95% completeness floor in every eligible market.",
+      "evidence_refs": [
+        "EV-INS-summary-d30"
+      ]
+    }
+  ],
+  "hypotheses": [],
+  "recommended_actions": [
+    {
+      "action": "Proceed to the day-60 checkpoint with no change to the rollout.",
+      "owner": "lifecycle-analytics",
+      "rationale": "Primary outcome inside the expected band, no guardrail movement, measurement healthy.",
+      "blocks_product_decision": false,
+      "evidence_refs": [
+        "EV-MOV-mutual-connection-rate-d30"
+      ]
+    }
+  ],
+  "confidence_and_escalation": {
+    "overall_confidence": "high",
+    "escalate": false,
+    "escalation_reasons": [],
+    "escalation_route": null
+  },
+  "evidence_index": [
+    {
+      "evidence_id": "EV-GRD-day7-retention-proxy-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-GRD-payment-completion-rate-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-GRD-report-block-rate-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-INS-summary-d30",
+      "tool": "instrumentation_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-MOV-feature-adoption-rate-d30",
+      "tool": "metric_movement",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-MOV-mutual-connection-rate-d30",
+      "tool": "metric_movement",
+      "summary": "Deterministic tool output cited by this report."
+    }
+  ]
+}

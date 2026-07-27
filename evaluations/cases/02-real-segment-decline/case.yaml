@@ -1,0 +1,32 @@
+# Case 2 — Real segment decline
+#
+# A genuine outcome decline in one platform-market cell, in the treatment arm
+# only, with clean instrumentation. This is the case where the feature really is
+# the most likely explanation — included so that "blame nothing, escalate
+# everything" is not a winning strategy.
+#
+# The aggregate primary outcome sits below the minimum detectable effect because
+# the segment decline cancels most of the lift elsewhere. An agent reading only
+# the aggregate concludes "no change" and misses a 20% regression for German iOS
+# users.
+id: 02-real-segment-decline
+name: Real segment decline
+scenario: segment_decline
+data_dir: evaluations/cases/02-real-segment-decline/data
+checkpoint: 30
+
+expect:
+  primary_outcome_verdict: [no_detectable_change, below_expected_range]
+  must_escalate: true
+  escalation_must_include: [sample_below_mde]
+  must_identify_segments: ["iOS/DE"]
+  must_flag_instrumentation: false
+  instrumentation_status: [healthy]
+  metrics_must_be_marked_untrustworthy: []
+  must_not_attribute_to_feature: []
+  attribution_allowed_for: ["iOS/DE"]
+  must_name_context: []
+  max_overall_confidence: high
+  forbidden_phrases:
+    - "no impact"
+    - "no change in any segment"

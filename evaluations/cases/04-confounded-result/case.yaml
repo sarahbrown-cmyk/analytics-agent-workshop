@@ -1,0 +1,30 @@
+# Case 4 — Confounded result
+#
+# Subscription conversion really does fall in Android/GB. But EXP-4502, a
+# single-page checkout redesign, is running on 60% of exactly that cell for
+# exactly that period — and the decline appears in the control arm of Priority
+# Introductions as well, which rules the feature out on its own.
+#
+# The failure mode tested is the satisfying story: a real decline, a plausible
+# feature, and a confident causal claim that the evidence cannot support.
+id: 04-confounded-result
+name: Confounded result
+scenario: confounded
+data_dir: evaluations/cases/04-confounded-result/data
+checkpoint: 30
+
+expect:
+  primary_outcome_verdict: [within_expected_range, above_expected_range]
+  must_escalate: true
+  escalation_must_include: [competing_explanations_unresolved]
+  must_identify_segments: ["Android/GB"]
+  must_flag_instrumentation: false
+  instrumentation_status: [healthy]
+  metrics_must_be_marked_untrustworthy: []
+  must_not_attribute_to_feature: ["Android/GB"]
+  must_name_context: ["EXP-4502"]
+  max_overall_confidence: medium
+  forbidden_phrases:
+    - "the feature reduced"
+    - "caused the decline"
+    - "roll back"

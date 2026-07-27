@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
+
+# Reports you generate during the workshop. The evidence bundles are large and
+# reproducible from the data, so there is no reason to commit them. Your own
+# report output is yours; commit it deliberately if you want to keep it.
+reports/*.json
+reports/*.md
+reports/_evidence/

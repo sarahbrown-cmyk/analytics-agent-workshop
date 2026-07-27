@@ -1,0 +1,38 @@
+{
+  "experiments": [
+    {
+      "experiment_id": "EXP-4471",
+      "name": "Paywall price-anchor ordering",
+      "status": "running",
+      "platform": "Android",
+      "markets": [
+        "US",
+        "DE"
+      ],
+      "start_date": "2026-05-10",
+      "end_date": "2026-06-15",
+      "traffic_share": 0.4,
+      "population": "free users, existing",
+      "primary_metric": "subscription_conversion_rate",
+      "owner": "monetization-analytics"
+    },
+    {
+      "experiment_id": "EXP-4488",
+      "name": "Onboarding photo prompt copy",
+      "status": "completed",
+      "platform": "iOS",
+      "markets": [
+        "US",
+        "GB",
+        "DE",
+        "CA"
+      ],
+      "start_date": "2026-04-20",
+      "end_date": "2026-05-20",
+      "traffic_share": 0.25,
+      "population": "new users",
+      "primary_metric": "profile_completion_rate",
+      "owner": "onboarding-analytics"
+    }
+  ]
+}

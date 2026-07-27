@@ -1,0 +1,49 @@
+{
+  "releases": [
+    {
+      "release_id": "rel-1041",
+      "date": "2026-05-04",
+      "platform": "iOS",
+      "version": "9.41.0",
+      "markets": [
+        "US",
+        "GB",
+        "DE",
+        "CA"
+      ],
+      "type": "app_release",
+      "summary": "Priority Introductions launch build.",
+      "touches_payments": false
+    },
+    {
+      "release_id": "rel-1042",
+      "date": "2026-05-04",
+      "platform": "Android",
+      "version": "9.41.0",
+      "markets": [
+        "US",
+        "GB",
+        "DE",
+        "CA"
+      ],
+      "type": "app_release",
+      "summary": "Priority Introductions launch build.",
+      "touches_payments": false
+    },
+    {
+      "release_id": "rel-1051",
+      "date": "2026-05-14",
+      "platform": "all",
+      "version": "server-config",
+      "markets": [
+        "US",
+        "GB",
+        "DE",
+        "CA"
+      ],
+      "type": "server_config",
+      "summary": "Introduction ranking weight tuned for recency. No client change.",
+      "touches_payments": false
+    }
+  ]
+}

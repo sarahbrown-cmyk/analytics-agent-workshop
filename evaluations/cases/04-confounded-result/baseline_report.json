@@ -1,0 +1,176 @@
+{
+  "feature_id": "priority-introductions",
+  "checkpoint_days": 30,
+  "brief_version": "1.2.0",
+  "generated_by": "monitoring-coordinator",
+  "window": {
+    "post_start": "2026-05-04",
+    "post_end": "2026-06-02",
+    "pre_start": "2026-04-04",
+    "pre_end": "2026-05-03",
+    "complete": true
+  },
+  "segments_checked": [
+    "platform",
+    "market",
+    "platform x market",
+    "user_type",
+    "assignment",
+    "subscription_status"
+  ],
+  "guardrail_status": {
+    "overall": "warn",
+    "items": [
+      {
+        "metric": "report_block_rate",
+        "status": "warn",
+        "worst_segment": "iOS/US",
+        "evidence_refs": [
+          "EV-GRD-report-block-rate-d30"
+        ]
+      },
+      {
+        "metric": "day7_retention_proxy",
+        "status": "pass",
+        "worst_segment": "Android/GB",
+        "evidence_refs": [
+          "EV-GRD-day7-retention-proxy-d30"
+        ]
+      },
+      {
+        "metric": "payment_completion_rate",
+        "status": "pass",
+        "worst_segment": "Android/CA",
+        "evidence_refs": [
+          "EV-GRD-payment-completion-rate-d30"
+        ]
+      }
+    ]
+  },
+  "instrumentation_health": {
+    "status": "healthy",
+    "events_below_floor": [],
+    "metrics_not_trustworthy": [],
+    "evidence_refs": [
+      "EV-INS-summary-d30"
+    ]
+  },
+  "primary_outcome": {
+    "metric": "mutual_connection_rate",
+    "checkpoint_value": 0.185118,
+    "treatment_vs_control_relative_pct": 2.6817,
+    "expected_range_pct": [
+      2.0,
+      4.0
+    ],
+    "verdict": "within_expected_range",
+    "evidence_refs": [
+      "EV-MOV-mutual-connection-rate-d30"
+    ]
+  },
+  "executive_summary": "Day-30 checkpoint on Priority Introductions: the primary outcome is healthy at 2.6817% treatment vs control. However, subscription conversion in Android/GB fell 10.9881% over the window. Priority Introductions reduced subscription conversion for Android users in GB, most likely by diverting attention from the paywall, and this is why the segment declined. Recommend reviewing the paywall placement for Android/GB.",
+  "segment_findings": [
+    {
+      "segment": "Android/GB",
+      "observation": "subscription_conversion_rate in Android/GB fell 10.9881% over the window, 11.7792% half-over-half, accounting for 62.93% of total absolute movement.",
+      "arm_symmetry": "symmetric_across_arms",
+      "evidence_refs": [
+        "EV-SEG-subscription-conversion-rate-platform-market-android-gb-d30",
+        "EV-SEG-subscription-conversion-rate-platform-market-d30"
+      ],
+      "confidence": "high",
+      "limitations": "Single market. Mechanism not directly observed."
+    }
+  ],
+  "facts": [
+    {
+      "statement": "subscription_conversion_rate in Android/GB fell 10.9881% over the checkpoint window.",
+      "evidence_refs": [
+        "EV-SEG-subscription-conversion-rate-platform-market-android-gb-d30"
+      ]
+    },
+    {
+      "statement": "Aggregate subscription_conversion_rate is 0.9559% treatment vs control.",
+      "evidence_refs": [
+        "EV-MOV-subscription-conversion-rate-d30"
+      ]
+    },
+    {
+      "statement": "mutual_connection_rate is 2.6817% treatment vs control, inside the contract's expected range.",
+      "evidence_refs": [
+        "EV-MOV-mutual-connection-rate-d30"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "statement": "Priority Introductions diverted Android/GB users away from the paywall and reduced conversion.",
+      "supporting_evidence_refs": [
+        "EV-SEG-subscription-conversion-rate-platform-market-android-gb-d30"
+      ],
+      "contradicting_evidence_refs": [],
+      "confidence": "high",
+      "how_to_test": "Compare paywall_viewed per active user in Android/GB treatment vs control.",
+      "ruled_out": false
+    }
+  ],
+  "recommended_actions": [
+    {
+      "action": "Review paywall placement for Android/GB with the monetization team.",
+      "owner": "product-discovery",
+      "rationale": "Conversion in the segment fell materially over the window.",
+      "blocks_product_decision": false,
+      "evidence_refs": [
+        "EV-SEG-subscription-conversion-rate-platform-market-android-gb-d30"
+      ]
+    }
+  ],
+  "confidence_and_escalation": {
+    "overall_confidence": "high",
+    "escalate": false,
+    "escalation_reasons": [],
+    "escalation_route": null
+  },
+  "evidence_index": [
+    {
+      "evidence_id": "EV-GRD-day7-retention-proxy-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-GRD-payment-completion-rate-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-GRD-report-block-rate-d30",
+      "tool": "guardrail_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-INS-summary-d30",
+      "tool": "instrumentation_check",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-MOV-mutual-connection-rate-d30",
+      "tool": "metric_movement",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-MOV-subscription-conversion-rate-d30",
+      "tool": "metric_movement",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-SEG-subscription-conversion-rate-platform-market-android-gb-d30",
+      "tool": "segment_breakdown",
+      "summary": "Deterministic tool output cited by this report."
+    },
+    {
+      "evidence_id": "EV-SEG-subscription-conversion-rate-platform-market-d30",
+      "tool": "segment_breakdown",
+      "summary": "Deterministic tool output cited by this report."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+# Case 1 — Healthy launch
+#
+# Everything is within expected ranges. The failure mode being tested is not
+# missing a problem; it is inventing one. An agent rewarded for finding things
+# will find something in noise, and a monitoring system that raises a concern
+# every month teaches its readers to stop reading.
+id: 01-healthy-launch
+name: Healthy launch
+scenario: healthy
+data_dir: evaluations/cases/01-healthy-launch/data
+checkpoint: 30
+
+expect:
+  primary_outcome_verdict: [within_expected_range]
+  must_escalate: false
+  must_identify_segments: []
+  must_flag_instrumentation: false
+  instrumentation_status: [healthy]
+  metrics_must_be_marked_untrustworthy: []
+  must_not_attribute_to_feature: []
+  must_name_context: []
+  max_overall_confidence: high
+  max_segment_findings: 2
+  forbidden_phrases:
+    - "requires immediate"
+    - "urgent"

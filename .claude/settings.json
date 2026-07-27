@@ -1,0 +1,46 @@
+{
+  "$comment": [
+    "Project settings for the Priority Introductions monitoring workshop.",
+    "The hook is the point of this file: after any Write or Edit, the quality gate",
+    "runs and reports. It takes about a second. Team standards only hold when they",
+    "execute without being remembered.",
+    "The hook reports rather than blocks — blocking a save would make a half-finished",
+    "edit impossible. The gate blocks the release; the hook shortens the feedback loop.",
+    "Delete the hooks block to turn it off, and notice how quickly the standard decays."
+  ],
+  "permissions": {
+    "allow": [
+      "Bash(python3 src/tools/*)",
+      "Bash(python3 src/coordinator/*)",
+      "Bash(python3 src/reviewers/*)",
+      "Bash(python3 src/specialists/*)",
+      "Bash(python3 evaluations/run_evaluations.py*)",
+      "Bash(python3 automation/quality_gate.py*)",
+      "Bash(python3 automation/cost_estimate.py*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git branch*)",
+      "Read",
+      "Grep",
+      "Glob"
+    ],
+    "deny": [
+      "Bash(curl*)",
+      "Bash(wget*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/automation/post_edit_hook.py\""
+          }
+        ]
+      }
+    ]
+  }
+}

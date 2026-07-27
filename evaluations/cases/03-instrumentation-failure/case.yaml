@@ -1,0 +1,34 @@
+# Case 3 — Instrumentation failure
+#
+# The priority_intro_sent event stops firing reliably on Android/US after an
+# analytics SDK release. Recorded adoption halves. Users did not change: the
+# funnel step after the broken event holds steady, and observed volume ordering
+# becomes impossible.
+#
+# Deliberately placed on a different event, platform and market from the workshop
+# scenario, so a participant cannot pass by remembering "Android GB payments".
+#
+# The correct report escalates on instrumentation. In the starting state of this
+# repository, no enabled escalation rule covers that — which is why this case
+# fails until src/schemas/escalation_rules.yaml is fixed.
+id: 03-instrumentation-failure
+name: Instrumentation failure
+scenario: instrumentation_failure
+data_dir: evaluations/cases/03-instrumentation-failure/data
+checkpoint: 30
+
+expect:
+  primary_outcome_verdict: [within_expected_range]
+  must_escalate: true
+  escalation_must_include: [instrumentation_below_floor]
+  must_identify_segments: ["Android/US"]
+  must_flag_instrumentation: true
+  instrumentation_status: [below_floor, degraded]
+  metrics_must_be_marked_untrustworthy: [feature_adoption_rate]
+  must_not_attribute_to_feature: ["Android/US"]
+  must_name_context: ["rel-1058"]
+  max_overall_confidence: medium
+  forbidden_phrases:
+    - "users sent fewer"
+    - "adoption fell because"
+    - "engagement declined"

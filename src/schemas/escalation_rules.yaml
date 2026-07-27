@@ -1,0 +1,74 @@
+# ============================================================================
+# Escalation rules
+#
+# When must this system stop concluding and hand back to a human?
+#
+# The checks themselves are implemented in src/coordinator/report_contract.py.
+# This file decides which are ENABLED and what each one says when it fires.
+# The split is deliberate: turning a rule on, retuning it, or rewording it is a
+# team decision that anyone should be able to make and review in a diff, without
+# touching Python. Writing a genuinely new check is engineering work.
+#
+# The model does not get a vote here. An agent that decides for itself whether it
+# feels confident enough to skip escalation is not a control, it is a mood.
+# ============================================================================
+
+version: 1.0.0
+owner: lifecycle-analytics
+reviewer: analytics-manager
+
+rules:
+  - id: guardrail_breach
+    enabled: true
+    severity: critical
+    reason: >
+      A guardrail crossed its contract threshold. A product decision must not be
+      made on this checkpoint until a human has reviewed the breach.
+
+  - id: required_segment_missing
+    enabled: true
+    severity: critical
+    reason: >
+      A segment the launch contract requires is absent from the metrics store.
+      Absent is not healthy, and the checkpoint cannot be called complete.
+
+  - id: window_incomplete
+    enabled: true
+    severity: high
+    reason: >
+      The checkpoint window is not fully covered by available data, so pre/post
+      comparisons are not like-for-like.
+
+  - id: competing_explanations_unresolved
+    enabled: true
+    severity: high
+    reason: >
+      More than one explanation survives the evidence at comparable confidence.
+      Choosing between them is a judgment call with product consequences.
+
+  - id: sample_below_mde
+    enabled: true
+    severity: medium
+    reason: >
+      The observed movement does not clear the minimum detectable effect in the
+      launch contract. The supportable statement is that no change is detectable
+      yet, not that there is no change.
+
+  - id: claim_without_evidence
+    enabled: true
+    severity: critical
+    reason: >
+      A claim in the report carries no evidence reference, or cites an evidence id
+      that no tool produced. Either way it cannot be checked.
+
+# ----------------------------------------------------------------------------
+# NOTE FOR THE WORKSHOP
+#
+# The launch contract at feature_briefs/priority-introductions.yaml lists six
+# escalation triggers. Count the rules above. One trigger in the contract has no
+# rule here, which is why this system currently reports an instrumentation
+# failure as an ordinary finding and does not escalate it.
+#
+# The evaluation suite will show you which case this breaks. The check is already
+# implemented in report_contract.py — it is simply not switched on.
+# ----------------------------------------------------------------------------

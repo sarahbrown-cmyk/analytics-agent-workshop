@@ -1,0 +1,129 @@
+# ============================================================================
+# Launch contract: Priority Introductions
+#
+# FICTIONAL. This feature does not exist. The markets, metrics, thresholds and
+# instrumentation requirements below are invented for the workshop and are not
+# Match Group metric definitions.
+#
+# This file is the agent's contract. It defines what success means, which
+# segments must be checked, and which guardrails must not deteriorate — BEFORE
+# any data is read. An agent that decides for itself what "success" means has
+# no contract to be held to.
+# ============================================================================
+
+feature:
+  id: priority-introductions
+  name: Priority Introductions
+  owner: product-discovery
+  analytics_owner: lifecycle-analytics
+  version: 1.2.0
+  brief_status: approved
+
+launch:
+  launch_date: 2026-05-04
+  rollout: "50/50 randomized, treatment vs control, holdout maintained through day 90"
+  eligible_markets: [US, GB, DE, CA]
+  target_platforms: [iOS, Android]
+  intended_population: >
+    Users 18+ with a complete profile, in an eligible market, on app version
+    9.41.0 or later. Both newly registered users past onboarding and existing
+    active users are eligible. Users with an active enforcement action are
+    excluded.
+  checkpoints: [30, 60, 90]
+
+# What the feature is supposed to do. One primary metric — a launch with three
+# primary metrics has none.
+primary_outcome:
+  metric: mutual_connection_rate
+  direction: increase
+  expected_relative_change_pct: [2.0, 4.0]
+  minimum_detectable_effect_pct: 1.2
+
+secondary_metrics:
+  - metric: feature_adoption_rate
+    direction: increase
+    expected_range_pct: [25.0, 45.0]
+    note: "Share of eligible treatment users who send at least one priority introduction."
+  - metric: subscription_conversion_rate
+    direction: increase
+    expected_relative_change_pct: [0.0, 2.5]
+  - metric: session_frequency
+    direction: increase
+    expected_relative_change_pct: [0.0, 1.5]
+
+# Guardrails are not "metrics we also like". They are the conditions under which
+# we would stop or roll back. Each one carries the threshold that triggers
+# escalation, so the check is deterministic rather than a judgment call.
+guardrail_metrics:
+  - metric: report_block_rate
+    direction: must_not_increase
+    breach_relative_pct: 5.0
+    severity: critical
+  - metric: day7_retention_proxy
+    direction: must_not_decrease
+    breach_relative_pct: 2.0
+    severity: critical
+  - metric: payment_completion_rate
+    direction: must_not_decrease
+    breach_relative_pct: 3.0
+    breach_absolute_floor: 0.85
+    severity: critical
+
+# Segments that must be reported on at every checkpoint, whether or not
+# anything looks wrong in them. An agent that only reports the segments where
+# it found something cannot be trusted to have looked at the others.
+required_segments:
+  - platform
+  - market
+  - platform x market
+  - user_type
+  - assignment
+  - subscription_status
+
+required_funnel:
+  name: priority_introductions_monetization
+  steps:
+    - feature_impression
+    - intro_viewed
+    - intro_sent
+    - paywall_viewed
+    - checkout_started
+    - payment_completed
+    - subscription_activated
+
+# The events the feature depends on. Completeness below the floor means the
+# metric derived from that event is not trustworthy — which is a finding about
+# measurement, not about users.
+instrumentation_requirements:
+  completeness_floor_pct: 95.0
+  critical_events:
+    - event: priority_intro_impression
+      required_properties: [user_id, intro_id, surface, app_version]
+    - event: priority_intro_sent
+      required_properties: [user_id, intro_id, recipient_bucket, app_version]
+    - event: paywall_viewed
+      required_properties: [user_id, paywall_id, app_version]
+    - event: checkout_started
+      required_properties: [user_id, sku, app_version]
+    - event: payment_completed
+      required_properties: [user_id, sku, processor, app_version]
+    - event: subscription_activated
+      required_properties: [user_id, sku, term]
+
+# Conditions under which the agent must escalate to a human instead of
+# concluding. These are enforced deterministically in
+# src/coordinator/report_contract.py — the model does not get to decide whether
+# it feels confident enough.
+escalation_triggers:
+  - guardrail_breach
+  - instrumentation_below_floor
+  - required_segment_missing
+  - competing_explanations_unresolved
+  - sample_below_mde
+  - claim_without_evidence
+
+human_escalation_route:
+  owner: lifecycle-analytics
+  reviewer: analytics-manager
+  channel: "#analytics-launch-review (fictional)"
+  sla_hours: 24

@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "monitoring_report.schema.json",
+  "title": "Post-launch monitoring report",
+  "description": "The contract for a checkpoint report. Ten sections, in this order. Separating facts from hypotheses is enforced by having two different arrays with two different required shapes: a fact cannot carry a confidence level, and a hypothesis cannot exist without something that would test it. Prose alone cannot enforce that distinction; a schema can.",
+  "type": "object",
+  "required": [
+    "feature_id",
+    "checkpoint_days",
+    "brief_version",
+    "window",
+    "executive_summary",
+    "primary_outcome",
+    "guardrail_status",
+    "segment_findings",
+    "instrumentation_health",
+    "facts",
+    "hypotheses",
+    "recommended_actions",
+    "confidence_and_escalation",
+    "evidence_index"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "feature_id": { "type": "string" },
+    "checkpoint_days": { "type": "integer", "enum": [30, 60, 90] },
+    "brief_version": { "type": "string" },
+    "generated_by": { "type": "string" },
+    "window": {
+      "type": "object",
+      "required": ["post_start", "post_end", "pre_start", "pre_end", "complete"],
+      "properties": {
+        "post_start": { "type": "string" },
+        "post_end": { "type": "string" },
+        "pre_start": { "type": "string" },
+        "pre_end": { "type": "string" },
+        "complete": { "type": "boolean" }
+      }
+    },
+    "executive_summary": {
+      "type": "string",
+      "minLength": 80,
+      "description": "What a reader who reads nothing else must know. State the checkpoint verdict and whether escalation is required."
+    },
+    "primary_outcome": {
+      "type": "object",
+      "required": ["metric", "treatment_vs_control_relative_pct", "verdict", "evidence_refs"],
+      "properties": {
+        "metric": { "type": "string" },
+        "checkpoint_value": { "type": ["number", "null"] },
+        "treatment_vs_control_relative_pct": { "type": ["number", "null"] },
+        "expected_range_pct": { "type": "array", "items": { "type": "number" } },
+        "verdict": {
+          "type": "string",
+          "enum": [
+            "within_expected_range",
+            "above_expected_range",
+            "below_expected_range",
+            "no_detectable_change",
+            "not_measurable"
+          ]
+        },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+      }
+    },
+    "guardrail_status": {
+      "type": "object",
+      "required": ["overall", "items"],
+      "properties": {
+        "overall": { "type": "string", "enum": ["pass", "warn", "breach", "unverified"] },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["metric", "status", "evidence_refs"],
+            "properties": {
+              "metric": { "type": "string" },
+              "status": {
+                "type": "string",
+                "enum": ["pass", "warn", "breach", "no_data"]
+              },
+              "worst_segment": { "type": ["string", "null"] },
+              "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+            }
+          }
+        }
+      }
+    },
+    "segment_findings": {
+      "type": "array",
+      "description": "One entry per segment finding. An empty array is a valid and sometimes correct answer, but only when every required segment was actually checked.",
+      "items": {
+        "type": "object",
+        "required": ["segment", "observation", "evidence_refs", "confidence", "limitations"],
+        "properties": {
+          "segment": { "type": "string" },
+          "observation": { "type": "string" },
+          "arm_symmetry": {
+            "type": ["string", "null"],
+            "enum": [
+              "treatment_only",
+              "symmetric_across_arms",
+              "opposite_in_control",
+              "control_only",
+              "no_material_movement",
+              "undetermined",
+              null
+            ]
+          },
+          "evidence_refs": { "$ref": "#/$defs/evidenceRefs" },
+          "confidence": { "$ref": "#/$defs/confidence" },
+          "limitations": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "segments_checked": {
+      "type": "array",
+      "description": "Every required segment that was examined, whether or not it produced a finding. Reporting only the segments that surfaced something makes it impossible to tell looking from finding.",
+      "items": { "type": "string" }
+    },
+    "instrumentation_health": {
+      "type": "object",
+      "required": ["status", "evidence_refs"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["healthy", "degraded", "below_floor", "unverified"]
+        },
+        "events_below_floor": { "type": "array", "items": { "type": "string" } },
+        "metrics_not_trustworthy": { "type": "array", "items": { "type": "string" } },
+        "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+      }
+    },
+    "facts": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Statements that follow directly from tool output. No confidence field: a fact is not a belief. No causal language: 'X fell 33%' is a fact, 'X fell because of Y' is a hypothesis.",
+      "items": {
+        "type": "object",
+        "required": ["statement", "evidence_refs"],
+        "additionalProperties": false,
+        "properties": {
+          "statement": { "type": "string", "minLength": 10 },
+          "evidence_refs": { "$ref": "#/$defs/evidenceRefsRequired" }
+        }
+      }
+    },
+    "hypotheses": {
+      "type": "array",
+      "description": "Possible explanations, each with what supports it, what argues against it, and what would settle it. A hypothesis with no test is a guess wearing a lab coat.",
+      "items": {
+        "type": "object",
+        "required": ["statement", "confidence", "how_to_test"],
+        "properties": {
+          "statement": { "type": "string", "minLength": 10 },
+          "supporting_evidence_refs": { "$ref": "#/$defs/evidenceRefs" },
+          "contradicting_evidence_refs": { "$ref": "#/$defs/evidenceRefs" },
+          "confidence": { "$ref": "#/$defs/confidence" },
+          "how_to_test": { "type": "string", "minLength": 10 },
+          "ruled_out": { "type": "boolean" }
+        }
+      }
+    },
+    "recommended_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["action", "owner", "rationale"],
+        "properties": {
+          "action": { "type": "string" },
+          "owner": { "type": "string" },
+          "rationale": { "type": "string" },
+          "blocks_product_decision": { "type": "boolean" },
+          "evidence_refs": { "$ref": "#/$defs/evidenceRefs" }
+        }
+      }
+    },
+    "confidence_and_escalation": {
+      "type": "object",
+      "required": ["overall_confidence", "escalate", "escalation_reasons"],
+      "properties": {
+        "overall_confidence": { "$ref": "#/$defs/confidence" },
+        "escalate": { "type": "boolean" },
+        "escalation_reasons": { "type": "array", "items": { "type": "string" } },
+        "escalation_route": { "type": ["string", "null"] }
+      }
+    },
+    "evidence_index": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Every evidence id cited anywhere in the report, with the tool that produced it. This is what makes a claim checkable by someone who was not in the room.",
+      "items": {
+        "type": "object",
+        "required": ["evidence_id", "tool"],
+        "properties": {
+          "evidence_id": { "type": "string", "pattern": "^EV-[A-Z]{3}-" },
+          "tool": { "type": "string" },
+          "summary": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "confidence": { "type": "string", "enum": ["low", "medium", "high"] },
+    "evidenceRefs": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^EV-[A-Z]{3}-" }
+    },
+    "evidenceRefsRequired": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "pattern": "^EV-[A-Z]{3}-" }
+    }
+  }
+}
