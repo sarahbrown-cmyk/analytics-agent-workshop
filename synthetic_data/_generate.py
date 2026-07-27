@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate the synthetic dataset for the Priority Recommendations workshop.
 
-Everything in this repository is fabricated. No Match Group data, metric
+Everything in this repository is fabricated. No real company's data, metric
 definition, or system is represented here. The generator is seeded, so the
 committed CSV/JSON files are reproducible byte-for-byte:
 

@@ -3,7 +3,7 @@
 #
 # FICTIONAL. This feature does not exist. The markets, metrics, thresholds and
 # instrumentation requirements below are invented for the workshop and are not
-# Match Group metric definitions.
+# any real organisation's metric definitions.
 #
 # This file is the agent's contract. It defines what success means, which
 # segments must be checked, and which guardrails must not deteriorate — BEFORE

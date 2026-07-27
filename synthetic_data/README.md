@@ -1,8 +1,8 @@
 # Synthetic data
 
-Everything here is fabricated by `_generate.py`. There is no real Match Group
-data, metric definition, brand, or credential in this repository, and nothing
-here connects to a production system.
+Everything here is fabricated by `_generate.py`. There is no real company data,
+metric definition, brand, or credential in this repository, and nothing here
+connects to a production system.
 
 The data is a **local metrics store**: four flat files that the deterministic
 tools in `src/tools/` load into an in-memory SQLite database and query with SQL.
